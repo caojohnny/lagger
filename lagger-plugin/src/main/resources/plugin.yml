@@ -1,0 +1,15 @@
+main: com.gmail.woodyc40.lagger.Lagger
+name: Lagger
+version: 1.0-SNAPSHOT
+api-version: "1.13"
+
+commands:
+  pause:
+    usage: /pause [time]
+    description: Pauses the server and lags the main thread for [time] seconds
+  ohi:
+    usage: /ohi [name]
+    description: Opens an inventory containing a skull of the player named [name]
+  sniff:
+    usage: /sniff [on | off | dump | filter] [arg]
+    description: Toggles on/off packet sniffing and dumping or adds a filter term

@@ -1,0 +1,22 @@
+# Lagger config
+
+# The default filtered packets, cannot be removed in game
+default-sniffer-filter:
+  - "PacketPlayOutRelEntityMove"
+  - "PacketPlayOutEntityHeadRotation"
+  - "PacketPlayOutRelEntityMoveLook"
+  - "PacketPlayOutEntityVelocity"
+  - "PacketPlayOutEntityLook"
+  - "PacketPlayOutEntityTeleport"
+  - "PacketPlayOutEntityStatus"
+  - "PacketPlayOutUpdateTime"
+  - "PacketPlayOutBlockChange"
+  - "PacketPlayOutMultiBlockChange"
+  - "PacketPlayOutKeepAlive"
+  - "PacketPlayOutNamedSoundEffect"
+  - "PacketPlayOutEntityMetadata"
+  - "PacketPlayOutEntityDestroy"
+  - "PacketPlayOutUpdateAttributes"
+  - "PacketPlayOutSpawnEntityLiving"
+  - "PacketPlayOutChat"
+  - "PacketPlayOutWorldEvent"
