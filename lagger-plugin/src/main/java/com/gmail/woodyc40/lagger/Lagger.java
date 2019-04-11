@@ -1,6 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
-import com.gmail.woodyc40.lagger.cmd.OpenHeadInventory;
+import com.gmail.woodyc40.lagger.cmd.OpenHeadInventoryCommand;
 import com.gmail.woodyc40.lagger.cmd.PacketSnifferCommand;
 import com.gmail.woodyc40.lagger.cmd.PauseCommand;
 import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
@@ -42,7 +42,7 @@ public class Lagger extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(injector.getInstance(PacketSnifferListener.class), this);
 
         this.registerCommand("pause", new PauseCommand());
-        this.registerCommand("ohi", injector.getInstance(OpenHeadInventory.class));
+        this.registerCommand("ohi", injector.getInstance(OpenHeadInventoryCommand.class));
         this.registerCommand("sniff", injector.getInstance(PacketSnifferCommand.class));
     }
 

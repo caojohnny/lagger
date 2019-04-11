@@ -14,14 +14,14 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpenHeadInventory implements CommandExecutor {
+public class OpenHeadInventoryCommand implements CommandExecutor {
     private final Lagger plugin;
     private final SkullCompat compat;
 
     private final Map<String, ItemStack> openedPlayers = new HashMap<>();
 
     @Inject
-    public OpenHeadInventory(Lagger plugin, SkullCompat compat) {
+    public OpenHeadInventoryCommand(Lagger plugin, SkullCompat compat) {
         this.plugin = plugin;
         this.compat = compat;
     }
