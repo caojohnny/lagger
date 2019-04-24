@@ -10,6 +10,9 @@ commands:
   ohi:
     usage: /ohi [name]
     description: Opens an inventory containing a skull of the player named [name]
-  sniff:
-    usage: /sniff [on | off | dump | filter] [arg]
+  psniff:
+    usage: /psniff [on | off | dump | filter] [arg]
     description: Toggles on/off packet sniffing and dumping or adds a filter term
+  esniff:
+    usage: /esniff [on | off | dump | filter] [arg]
+    description: Toggles on/off event sniffing and dumping or adds an event

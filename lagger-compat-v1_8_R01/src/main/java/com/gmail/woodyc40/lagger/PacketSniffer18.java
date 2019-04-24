@@ -12,21 +12,30 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class PacketSniffer18 implements PacketSniffer {
     private final JavaPlugin plugin;
+    private final FieldInspector inspector;
+
     private final Set<String> filteredPacketNames = new HashSet<>();
     private final Map<Player, Sniffer> sniffing = new HashMap<>();
+
     private boolean dumpEnabled;
 
     public PacketSniffer18(JavaPlugin plugin) {
         this.plugin = plugin;
+        this.inspector = new FieldInspector(plugin);
+
+        this.inspector.addFieldListener(fieldValue -> {
+            if (fieldValue instanceof ItemStack) {
+                ItemStack item = (ItemStack) fieldValue;
+                plugin.getLogger().info(String.format("    %s", item.getTag()));
+            }
+        });
     }
 
     @Override
@@ -68,7 +77,7 @@ public class PacketSniffer18 implements PacketSniffer {
                 plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
 
                 if (dumpEnabled) {
-                    dump(packet);
+                    inspector.dump(packet);
                 }
             }
         };
@@ -81,32 +90,6 @@ public class PacketSniffer18 implements PacketSniffer {
             EntityPlayer ep = toNmsPlayer(player);
             ep.playerConnection = sniffer.getOriginalConnection();
         }
-    }
-
-    private void dump(Packet<?> packet) {
-        Logger logger = this.plugin.getLogger();
-        logger.info("{");
-        for (Field field : packet.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            String fieldType = field.getType().getSimpleName();
-            String fieldName = field.getName();
-            try {
-                Object fieldValue = field.get(packet);
-                logger.info(String.format("  %s %s = %s", fieldType, fieldName, fieldValue));
-
-                if (fieldValue instanceof ItemStack) {
-                    ItemStack item = (ItemStack) fieldValue;
-                    logger.info(String.format("    %s", item.getTag()));
-                }
-            } catch (Exception e) {
-                logger.warning(String.format("  %s %s = ? (%s)", fieldType, fieldName, e.getMessage()));
-            }
-        }
-
-        logger.info("");
-        CallTracer.trace(logger);
-
-        logger.info("}");
     }
 
     private static EntityPlayer toNmsPlayer(Player player) {

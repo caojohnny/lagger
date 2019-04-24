@@ -1,51 +1,39 @@
 package com.gmail.woodyc40.lagger.cmd;
 
-import com.gmail.woodyc40.lagger.PacketSniffer;
+import com.gmail.woodyc40.lagger.Lagger;
+import com.gmail.woodyc40.lagger.util.EventSniffer;
 import com.google.inject.Inject;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-public class PacketSnifferCommand implements CommandExecutor {
-    private final PacketSniffer sniffer;
+public class EventSnifferCommand implements CommandExecutor {
+    private final Lagger plugin;
+    private final EventSniffer sniffer;
 
     @Inject
-    public PacketSnifferCommand(PacketSniffer sniffer) {
-        this.sniffer = sniffer;
+    public EventSnifferCommand(Lagger plugin) {
+        this.plugin = plugin;
+        this.sniffer = new EventSniffer(plugin);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("lagger.psniff")) {
+        if (!sender.hasPermission("lagger.esniff")) {
             sender.sendMessage("No permission!");
             return true;
         }
 
         if (args.length == 1 && "on".equalsIgnoreCase(args[0])) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("Not a player!");
-                return true;
-            }
-
-            Player player = (Player) sender;
-            this.sniffer.sniff(player);
-
-            sender.sendMessage(String.format("Started packet sniffer for %s, check console", player.getName()));
+            this.sniffer.sniff();
+            sender.sendMessage("Began event sniffer");
 
             return true;
         }
 
         if (args.length == 1 && "off".equalsIgnoreCase(args[0])) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("Not a player!");
-                return true;
-            }
-
-            Player player = (Player) sender;
-            this.sniffer.unsniff(player);
-
-            sender.sendMessage(String.format("Ended packet sniffer for %s", player.getName()));
+            this.sniffer.unsniff();
+            sender.sendMessage("Ended event sniffer");
 
             return true;
         }
@@ -65,10 +53,8 @@ public class PacketSnifferCommand implements CommandExecutor {
         }
 
         if (args.length == 2 && "filter".equalsIgnoreCase(args[0])) {
-            String packetName = args[1];
-            this.sniffer.filter(packetName);
-
-            sender.sendMessage(String.format("Added %s to the packet filter", packetName));
+            String eventName = args[1];
+            this.sniffer.toggleFilter(sender, eventName);
 
             return true;
         }
