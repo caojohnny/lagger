@@ -1,9 +1,6 @@
 package com.gmail.woodyc40.lagger.module;
 
-import com.gmail.woodyc40.lagger.Lagger;
-import com.gmail.woodyc40.lagger.PacketSniffer;
-import com.gmail.woodyc40.lagger.PacketSniffer113;
-import com.gmail.woodyc40.lagger.PacketSniffer18;
+import com.gmail.woodyc40.lagger.*;
 import com.google.inject.AbstractModule;
 import org.bukkit.Bukkit;
 
@@ -19,7 +16,10 @@ public class PacketSnifferModule extends AbstractModule {
     @Override
     protected void configure() {
         String version = Bukkit.getBukkitVersion();
-        if (version.startsWith("1.13")) {
+        if (version.startsWith("1.14")) {
+            this.bind(PacketSniffer.class).toInstance(new PacketSniffer114(this.plugin));
+            this.plugin.getLogger().info(String.format("Registered packet sniffer for Bukkit %s", version));
+        } else if (version.startsWith("1.13")) {
             this.bind(PacketSniffer.class).toInstance(new PacketSniffer113(this.plugin));
             this.plugin.getLogger().info(String.format("Registered packet sniffer for Bukkit %s", version));
         } else if (version.startsWith("1.8")) {

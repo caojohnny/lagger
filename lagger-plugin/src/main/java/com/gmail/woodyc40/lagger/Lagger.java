@@ -1,9 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
-import com.gmail.woodyc40.lagger.cmd.EventSnifferCommand;
-import com.gmail.woodyc40.lagger.cmd.OpenHeadInventoryCommand;
-import com.gmail.woodyc40.lagger.cmd.PacketSnifferCommand;
-import com.gmail.woodyc40.lagger.cmd.PauseCommand;
+import com.gmail.woodyc40.lagger.cmd.*;
 import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
 import com.gmail.woodyc40.lagger.module.CompatModule;
 import com.gmail.woodyc40.lagger.module.ConfigModule;
