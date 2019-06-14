@@ -17,6 +17,7 @@
         <module>lagger-compat</module>
         <module>lagger-compat-v1_8_R01</module>
         <module>lagger-compat-v1_13_R01</module>
+        <module>lagger-compat-v1_14_R01</module>
     </modules>
 
     <repositories>
