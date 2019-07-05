@@ -17,7 +17,7 @@ public class PacketSnifferModule extends AbstractModule {
     protected void configure() {
         String version = Bukkit.getBukkitVersion();
         if (version.startsWith("1.14")) {
-            this.bind(PacketSniffer.class).toInstance(new PacketSniffer114(this.plugin));
+            this.bind(PacketSniffer.class).toInstance(new PacketSniffer114R01(this.plugin));
             this.plugin.getLogger().info(String.format("Registered packet sniffer for Bukkit %s", version));
         } else if (version.startsWith("1.13")) {
             this.bind(PacketSniffer.class).toInstance(new PacketSniffer113(this.plugin));

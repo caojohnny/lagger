@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class PacketSniffer114 implements PacketSniffer {
+public class PacketSniffer114R01 implements PacketSniffer {
     private final JavaPlugin plugin;
     private final FieldInspector inspector;
 
@@ -26,7 +26,7 @@ public class PacketSniffer114 implements PacketSniffer {
 
     private boolean dumpEnabled;
 
-    public PacketSniffer114(JavaPlugin plugin) {
+    public PacketSniffer114R01(JavaPlugin plugin) {
         this.plugin = plugin;
         this.inspector = new FieldInspector(plugin);
 

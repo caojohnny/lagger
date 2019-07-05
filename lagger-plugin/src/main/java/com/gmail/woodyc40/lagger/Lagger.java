@@ -2,10 +2,7 @@ package com.gmail.woodyc40.lagger;
 
 import com.gmail.woodyc40.lagger.cmd.*;
 import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
-import com.gmail.woodyc40.lagger.module.CompatModule;
-import com.gmail.woodyc40.lagger.module.ConfigModule;
-import com.gmail.woodyc40.lagger.module.PacketSnifferModule;
-import com.gmail.woodyc40.lagger.module.PluginModule;
+import com.gmail.woodyc40.lagger.module.*;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -30,7 +27,8 @@ public class Lagger extends JavaPlugin {
                 new PluginModule(this),
                 new ConfigModule(this),
                 new CompatModule(this),
-                new PacketSnifferModule(this));
+                new PacketSnifferModule(this),
+                new ListenerModule(this));
         injector.injectMembers(this);
 
         for (String packetName : this.config.getDefaultSnifferFilter()) {

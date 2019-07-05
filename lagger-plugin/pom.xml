@@ -57,6 +57,13 @@
 
         <dependency>
             <groupId>com.gmail.woodyc40</groupId>
+            <artifactId>lagger-compat-paper-v1_14_2_R01</artifactId>
+            <version>${lagger.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.woodyc40</groupId>
             <artifactId>lagger-compat</artifactId>
             <version>${lagger.version}</version>
             <scope>compile</scope>
