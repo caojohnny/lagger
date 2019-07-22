@@ -1,5 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
+import com.avaje.ebeaninternal.server.query.BeanCollectionWrapper;
 import com.gmail.woodyc40.lagger.cmd.*;
 import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
 import com.gmail.woodyc40.lagger.module.*;
@@ -26,9 +27,11 @@ public class Lagger extends JavaPlugin {
         Injector injector = Guice.createInjector(
                 new PluginModule(this),
                 new ConfigModule(this),
-                new CompatModule(this),
+                new SkullCompatModule(this),
                 new PacketSnifferModule(this),
-                new ListenerModule(this));
+                new ChunkModule(this)
+                // new ListenerModule(this)
+        );
         injector.injectMembers(this);
 
         for (String packetName : this.config.getDefaultSnifferFilter()) {
@@ -41,6 +44,7 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("ohi", injector.getInstance(OpenHeadInventoryCommand.class));
         this.registerCommand("psniff", injector.getInstance(PacketSnifferCommand.class));
         this.registerCommand("esniff", injector.getInstance(EventSnifferCommand.class));
+        this.registerCommand("chunk", injector.getInstance(ChunkCommand.class));
     }
 
     private void registerCommand(String cmd, CommandExecutor ce) {

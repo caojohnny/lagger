@@ -6,10 +6,10 @@ import org.bukkit.Bukkit;
 
 import java.util.logging.Level;
 
-public class CompatModule extends AbstractModule {
+public class SkullCompatModule extends AbstractModule {
     private final Lagger plugin;
 
-    public CompatModule(Lagger plugin) {
+    public SkullCompatModule(Lagger plugin) {
         this.plugin = plugin;
     }
 
@@ -18,13 +18,13 @@ public class CompatModule extends AbstractModule {
         String version = Bukkit.getBukkitVersion();
         if (version.startsWith("1.14")) {
             this.bind(SkullCompat.class).toInstance(new SkullCompat114R01());
-            this.plugin.getLogger().info(String.format("Registered compat provider for Bukkit %s", version));
+            this.plugin.getLogger().info(String.format("Registered skull compat provider for Bukkit %s", version));
         } else if (version.startsWith("1.13")) {
             this.bind(SkullCompat.class).toInstance(new SkullCompat113R01());
-            this.plugin.getLogger().info(String.format("Registered compat provider for Bukkit %s", version));
+            this.plugin.getLogger().info(String.format("Registered skull compat provider for Bukkit %s", version));
         } else if (version.startsWith("1.8")) {
             this.bind(SkullCompat.class).toInstance(new SkullCompat18R01());
-            this.plugin.getLogger().info(String.format("Registered compat provider for Bukkit %s", version));
+            this.plugin.getLogger().info(String.format("Registered skull compat provider for Bukkit %s", version));
         } else {
             this.plugin.getLogger().log(Level.SEVERE, String.format("Unrecognized server version %s", version), new IllegalStateException());
         }
