@@ -87,11 +87,6 @@
                 </executions>
                 <configuration>
                     <minimizeJar>true</minimizeJar>
-                    <artifactSet>
-                        <excludes>
-                            <exclude>javax.inject:javax.inject</exclude>
-                        </excludes>
-                    </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>dagger</pattern>

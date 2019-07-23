@@ -8,7 +8,7 @@ commands:
     usage: /pause [time]
     description: Pauses the server and lags the main thread for [time] seconds
   ohi:
-    usage: /ohi [name]
+    usage: /ohi [name] [verbose]
     description: Opens an inventory containing a skull of the player named [name]
   psniff:
     usage: /psniff [on | off | dump | filter] [arg]

@@ -9,9 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.inject.Inject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OpenHeadInventoryCommand implements CommandExecutor {
@@ -38,27 +40,45 @@ public class OpenHeadInventoryCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length != 1) {
+        if (args.length < 1) {
             sender.sendMessage(command.getUsage());
             return true;
         }
+
+        boolean verbose = args.length == 2 && args[1].equalsIgnoreCase("verbose");
 
         Player player = (Player) sender;
         String targetName = args[0];
         Player target = Bukkit.getPlayerExact(targetName);
         if (target == null) {
-            sender.sendMessage(String.format("Opening inventory with %s's skull | offline=true seen=%s", targetName, this.openedPlayers.containsKey(targetName)));
             Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
                 ItemStack item = this.openedPlayers.computeIfAbsent(targetName, k -> this.compat.getPlayerSkull(targetName));
+                addSkullLore(item);
                 Bukkit.getScheduler().runTask(this.plugin, () -> player.openInventory(this.createSkullInv(player, item)));
+
+                sender.sendMessage(String.format("Opening inventory with %s's skull | offline=true seen=%s", targetName, this.openedPlayers.containsKey(targetName)));
+                if (verbose) {
+                    sender.sendMessage(String.format("Head #toString()=%s", item.toString()));
+                }
             });
         } else {
-            sender.sendMessage(String.format("Opening inventory with %s's skull | offline=false", targetName));
             ItemStack item = this.openedPlayers.computeIfAbsent(targetName, k -> this.compat.getPlayerSkull(targetName));
+            addSkullLore(item);
             player.openInventory(this.createSkullInv(player, item));
+
+            sender.sendMessage(String.format("Opening inventory with %s's skull | offline=false", targetName));
+            if (verbose) {
+                sender.sendMessage(String.format("Head #toString()=%s", item.toString()));
+            }
         }
 
         return true;
+    }
+
+    private static void addSkullLore(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setLore(List.of("Don't mind me", "I'm just a test lore"));
+        item.setItemMeta(meta);
     }
 
     private Inventory createSkullInv(Player player, ItemStack skull) {
