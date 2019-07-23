@@ -1,11 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
-import net.minecraft.server.v1_8_R3.NetworkManager;
-import net.minecraft.server.v1_8_R3.Packet;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -17,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class PacketSniffer18 implements PacketSniffer {
+public class PacketSniffer18R01 implements PacketSniffer {
     private final JavaPlugin plugin;
     private final FieldInspector inspector;
 
@@ -26,7 +21,7 @@ public class PacketSniffer18 implements PacketSniffer {
 
     private boolean dumpEnabled;
 
-    public PacketSniffer18(JavaPlugin plugin) {
+    public PacketSniffer18R01(JavaPlugin plugin) {
         this.plugin = plugin;
         this.inspector = new FieldInspector(plugin);
 
@@ -69,15 +64,15 @@ public class PacketSniffer18 implements PacketSniffer {
                 super.sendPacket(packet);
 
                 String packetName = packet.getClass().getSimpleName();
-                if (filteredPacketNames.contains(packetName.toLowerCase())) {
+                if (PacketSniffer18R01.this.filteredPacketNames.contains(packetName.toLowerCase())) {
                     return;
                 }
 
                 String playerName = ep.getName();
-                plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
+                PacketSniffer18R01.this.plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
 
-                if (dumpEnabled) {
-                    inspector.dump(packet);
+                if (PacketSniffer18R01.this.dumpEnabled) {
+                    PacketSniffer18R01.this.inspector.dump(packet);
                 }
             }
         };

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <lagger.version>1.0-SNAPSHOT</lagger.version>
+        <dagger.version>2.23.2</dagger.version>
     </properties>
 
     <groupId>com.gmail.woodyc40</groupId>
@@ -37,6 +37,14 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.dagger</groupId>
+                            <artifactId>dagger-compiler</artifactId>
+                            <version>${dagger.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>

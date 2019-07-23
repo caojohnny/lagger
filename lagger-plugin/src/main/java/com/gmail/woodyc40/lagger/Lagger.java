@@ -1,60 +1,81 @@
 package com.gmail.woodyc40.lagger;
 
-import com.avaje.ebeaninternal.server.query.BeanCollectionWrapper;
-import com.gmail.woodyc40.lagger.cmd.*;
-import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
-import com.gmail.woodyc40.lagger.module.*;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
+import com.gmail.woodyc40.lagger.cmd.ClearInventoryCommand;
+import com.gmail.woodyc40.lagger.cmd.PauseCommand;
+import com.gmail.woodyc40.lagger.module.NmsModule;
+import com.gmail.woodyc40.lagger.module.NmsModule_v1_13_R01;
+import com.gmail.woodyc40.lagger.module.NmsModule_v1_14_R01;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
-public class Lagger extends JavaPlugin {
-    @Inject
-    private Config config;
-    @Inject
-    private PacketSniffer sniffer;
+import static java.lang.String.format;
 
+public class Lagger extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
 
-        Injector injector = Guice.createInjector(
-                new PluginModule(this),
-                new ConfigModule(this),
-                new SkullCompatModule(this),
-                new PacketSnifferModule(this),
-                new ChunkModule(this)
-                // new ListenerModule(this)
-        );
-        injector.injectMembers(this);
-
-        for (String packetName : this.config.getDefaultSnifferFilter()) {
-            this.sniffer.filter(packetName);
+        LaggerComponent component = this.configure();
+        for (String packetName : component.getConfig().getDefaultSnifferFilter()) {
+            component.getPacketSniffer().filter(packetName);
         }
 
-        Bukkit.getPluginManager().registerEvents(injector.getInstance(PacketSnifferListener.class), this);
+        PluginManager pm = Bukkit.getPluginManager();
+        pm.registerEvents(component.newPacketSnifferListener(), this);
 
         this.registerCommand("pause", new PauseCommand());
-        this.registerCommand("ohi", injector.getInstance(OpenHeadInventoryCommand.class));
-        this.registerCommand("psniff", injector.getInstance(PacketSnifferCommand.class));
-        this.registerCommand("esniff", injector.getInstance(EventSnifferCommand.class));
-        this.registerCommand("chunk", injector.getInstance(ChunkCommand.class));
+        this.registerCommand("ohi", component.newOhiCmd());
+        this.registerCommand("psniff", component.newPSniffCmd());
+        this.registerCommand("esniff", component.newESniffCmd());
+        this.registerCommand("chunk", component.newChunkCmd());
+        this.registerCommand("ci", new ClearInventoryCommand());
+    }
+
+    private LaggerComponent configure() {
+        NmsModule nmsModule;
+
+        String version = Bukkit.getBukkitVersion();
+        if (version.startsWith("1.14")) {
+            nmsModule = new NmsModule_v1_14_R01();
+
+            /* PluginManager pm = Bukkit.getPluginManager();
+            pm.registerEvents(new DismountListener(), this);
+            this.getLogger().info("Registered DismountListener");
+
+            String serverVersion = Bukkit.getVersion();
+            if (serverVersion.toLowerCase().contains("paper")) {
+                pm.registerEvents(new EntityRemoveListener(), this);
+                this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
+            } */
+        } else if (version.startsWith("1.13")) {
+            nmsModule = new NmsModule_v1_13_R01();
+        } else if (version.startsWith("1.8")) {
+            nmsModule = new NmsModule_v1_14_R01();
+        } else {
+            throw new UnsupportedOperationException(format("Bukkit '%s' is not supported", version));
+        }
+
+        this.getLogger().info(format("Registered NMS module for version %s", version));
+        return DaggerLaggerComponent
+                .builder()
+                .plugin(this)
+                .nmsModule(nmsModule)
+                .build();
     }
 
     private void registerCommand(String cmd, CommandExecutor ce) {
         PluginCommand pc = this.getCommand(cmd);
         if (pc == null) {
-            this.getLogger().log(Level.SEVERE, String.format("%s is not in the plugin.yml", cmd), new IllegalStateException());
+            this.getLogger().log(Level.SEVERE, format("%s is not in the plugin.yml", cmd), new IllegalStateException());
             return;
         }
 
         pc.setExecutor(ce);
-        this.getLogger().info(String.format("Registered command '%s' to CommandExecutor %s", cmd, ce.getClass().getSimpleName()));
+        this.getLogger().info(format("Registered command '%s' to CommandExecutor %s", cmd, ce.getClass().getSimpleName()));
     }
 }

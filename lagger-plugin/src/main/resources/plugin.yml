@@ -17,5 +17,8 @@ commands:
     usage: /esniff [on | off | dump | filter] [arg]
     description: Toggles on/off event sniffing and dumping or adds an event
   chunk:
-    usage: /chunk [load | unload | reload] [loaded]
+    usage: /chunk [load | unload | reload | help] [loaded]
     description: Allows simple manual control of chunk functionality
+  ci:
+    usage: /ci
+    description: Clears the inventory of whoever is running the command

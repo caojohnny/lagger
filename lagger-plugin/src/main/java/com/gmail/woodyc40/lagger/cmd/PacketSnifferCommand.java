@@ -1,11 +1,12 @@
 package com.gmail.woodyc40.lagger.cmd;
 
 import com.gmail.woodyc40.lagger.PacketSniffer;
-import com.google.inject.Inject;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import javax.inject.Inject;
 
 public class PacketSnifferCommand implements CommandExecutor {
     private final PacketSniffer sniffer;

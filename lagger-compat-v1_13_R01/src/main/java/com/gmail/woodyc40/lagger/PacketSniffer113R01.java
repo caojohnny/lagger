@@ -1,11 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
-import net.minecraft.server.v1_13_R2.EntityPlayer;
-import net.minecraft.server.v1_13_R2.ItemStack;
-import net.minecraft.server.v1_13_R2.MinecraftServer;
-import net.minecraft.server.v1_13_R2.NetworkManager;
-import net.minecraft.server.v1_13_R2.Packet;
-import net.minecraft.server.v1_13_R2.PlayerConnection;
+import net.minecraft.server.v1_13_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_13_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
@@ -17,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class PacketSniffer113 implements PacketSniffer {
+public class PacketSniffer113R01 implements PacketSniffer {
     private final JavaPlugin plugin;
     private final FieldInspector inspector;
 
@@ -26,7 +21,7 @@ public class PacketSniffer113 implements PacketSniffer {
 
     private boolean dumpEnabled;
 
-    public PacketSniffer113(JavaPlugin plugin) {
+    public PacketSniffer113R01(JavaPlugin plugin) {
         this.plugin = plugin;
         this.inspector = new FieldInspector(plugin);
 
@@ -69,15 +64,15 @@ public class PacketSniffer113 implements PacketSniffer {
                 super.sendPacket(packet);
 
                 String packetName = packet.getClass().getSimpleName();
-                if (filteredPacketNames.contains(packetName.toLowerCase())) {
+                if (PacketSniffer113R01.this.filteredPacketNames.contains(packetName.toLowerCase())) {
                     return;
                 }
 
                 String playerName = ep.getName();
-                plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
+                PacketSniffer113R01.this.plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
 
-                if (dumpEnabled) {
-                    inspector.dump(packet);
+                if (PacketSniffer113R01.this.dumpEnabled) {
+                    PacketSniffer113R01.this.inspector.dump(packet);
                 }
             }
         };

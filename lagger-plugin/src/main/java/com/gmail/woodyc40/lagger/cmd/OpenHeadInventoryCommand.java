@@ -1,8 +1,7 @@
 package com.gmail.woodyc40.lagger.cmd;
 
-import com.gmail.woodyc40.lagger.SkullCompat;
 import com.gmail.woodyc40.lagger.Lagger;
-import com.google.inject.Inject;
+import com.gmail.woodyc40.lagger.SkullCompat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 

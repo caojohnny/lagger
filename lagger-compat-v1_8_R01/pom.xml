@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.gmail.woodyc40</groupId>
             <artifactId>lagger-compat</artifactId>
-            <version>${lagger.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

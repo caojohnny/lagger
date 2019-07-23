@@ -1,12 +1,15 @@
-package com.gmail.woodyc40.lagger;
+package com.gmail.woodyc40.lagger.config;
 
+import com.gmail.woodyc40.lagger.Lagger;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class Config {
     private final List<String> defaultSnifferFilter;
 
+    @Inject
     public Config(Lagger plugin) {
         FileConfiguration cfg = plugin.getConfig();
 

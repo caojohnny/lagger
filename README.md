@@ -30,4 +30,7 @@ See `plugin.yml` for commands.
 
 # Credits
 
-Built with [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+Built with [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+
+Uses [Dagger](https://github.com/google/dagger) and the
+[Checker Framework](https://checkerframework.org/)
