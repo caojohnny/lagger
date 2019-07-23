@@ -5,6 +5,7 @@ import com.gmail.woodyc40.lagger.cmd.PauseCommand;
 import com.gmail.woodyc40.lagger.module.NmsModule;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_13_R01;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_14_R01;
+import com.gmail.woodyc40.lagger.module.NmsModule_v1_8_R01;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -55,7 +56,7 @@ public class Lagger extends JavaPlugin {
         } else if (version.startsWith("1.13")) {
             nmsModule = new NmsModule_v1_13_R01();
         } else if (version.startsWith("1.8")) {
-            nmsModule = new NmsModule_v1_14_R01();
+            nmsModule = new NmsModule_v1_8_R01();
         } else {
             throw new UnsupportedOperationException(format("Bukkit '%s' is not supported", version));
         }
