@@ -1,9 +1,6 @@
 package com.gmail.woodyc40.lagger.module;
 
-import com.gmail.woodyc40.lagger.ChunkCompat;
-import com.gmail.woodyc40.lagger.Lagger;
-import com.gmail.woodyc40.lagger.PacketSniffer;
-import com.gmail.woodyc40.lagger.SkullCompat;
+import com.gmail.woodyc40.lagger.*;
 import dagger.Module;
 import dagger.Provides;
 
@@ -26,6 +23,12 @@ public class NmsModule {
     @Provides
     @Singleton
     SkullCompat provideSkullCompat() {
+        return null;
+    }
+
+    @Provides
+    @Singleton
+    SetSlotCompat provideSetSlotCompat() {
         return null;
     }
 }

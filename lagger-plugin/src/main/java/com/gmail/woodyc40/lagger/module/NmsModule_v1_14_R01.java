@@ -17,4 +17,9 @@ public class NmsModule_v1_14_R01 extends NmsModule {
     SkullCompat provideSkullCompat() {
         return new SkullCompat114R01();
     }
+
+    @Override
+    SetSlotCompat provideSetSlotCompat() {
+        return new SetSlotCompat114R01();
+    }
 }

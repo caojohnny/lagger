@@ -5,13 +5,13 @@ api-version: "1.13"
 
 commands:
   pause:
-    usage: /pause [time]
+    usage: /pause <time>
     description: Pauses the server and lags the main thread for [time] seconds
   ohi:
-    usage: /ohi [name] [verbose]
+    usage: /ohi <name> [verbose]
     description: Opens an inventory containing a skull of the player named [name]
   psniff:
-    usage: /psniff [on | off | dump | filter] [arg]
+    usage: /psniff <on | off | dump | filter> [arg]
     description: Toggles on/off packet sniffing and dumping or adds a filter term
   esniff:
     usage: /esniff [on | off | dump | filter] [arg]
@@ -22,3 +22,9 @@ commands:
   ci:
     usage: /ci
     description: Clears the inventory of whoever is running the command
+  setslot:
+    usage: /setslot <-2 | 0 | update>
+    description: Sets the currently held slot to something, or updates inventory
+  runas:
+    usage: /runas <player> <command...>
+    description: Runs a command as if a different player runs it

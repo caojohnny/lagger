@@ -2,6 +2,7 @@ package com.gmail.woodyc40.lagger;
 
 import com.gmail.woodyc40.lagger.cmd.ClearInventoryCommand;
 import com.gmail.woodyc40.lagger.cmd.PauseCommand;
+import com.gmail.woodyc40.lagger.cmd.RunAsCmd;
 import com.gmail.woodyc40.lagger.module.NmsModule;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_13_R01;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_14_R01;
@@ -35,6 +36,8 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("esniff", component.newESniffCmd());
         this.registerCommand("chunk", component.newChunkCmd());
         this.registerCommand("ci", new ClearInventoryCommand());
+        this.registerCommand("setslot", component.newSetSlotCmd());
+        this.registerCommand("runas", new RunAsCmd());
     }
 
     private LaggerComponent configure() {
