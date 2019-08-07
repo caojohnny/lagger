@@ -23,6 +23,11 @@ public class ChunkCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!sender.hasPermission("lagger.chunk")) {
+            sender.sendMessage("No permission!");
+            return true;
+        }
+
         if (!(sender instanceof Player)) {
             sender.sendMessage("You are not a player!");
             return true;

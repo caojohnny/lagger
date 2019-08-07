@@ -11,6 +11,11 @@ import static java.lang.String.format;
 public class RunAsCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!sender.hasPermission("lagger.runas")) {
+            sender.sendMessage("No permission!");
+            return true;
+        }
+
         if (args.length < 2) {
             return false;
         }

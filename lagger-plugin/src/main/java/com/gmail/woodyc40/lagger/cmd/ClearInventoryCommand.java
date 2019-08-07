@@ -10,6 +10,11 @@ import org.bukkit.inventory.PlayerInventory;
 public class ClearInventoryCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!sender.hasPermission("lagger.ci")) {
+            sender.sendMessage("No permission!");
+            return true;
+        }
+
         if (!(sender instanceof Player)) {
             sender.sendMessage("You are not a player!");
             return true;
