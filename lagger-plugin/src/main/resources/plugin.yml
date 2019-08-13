@@ -28,3 +28,7 @@ commands:
   runas:
     usage: /runas <player> <command...>
     description: Runs a command as if a different player runs it
+  copyplugins:
+    aliases: [ cp ]
+    usage: /copyplugins [del [files...]]
+    description: Uses a script to copy plugins to your plugin dir, optionally removing files, and reloading the server

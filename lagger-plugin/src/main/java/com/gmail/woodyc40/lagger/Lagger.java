@@ -38,6 +38,7 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("ci", new ClearInventoryCommand());
         this.registerCommand("setslot", component.newSetSlotCmd());
         this.registerCommand("runas", new RunAsCmd());
+        this.registerCommand("copyplugins", component.newCopyPluginsCmd());
     }
 
     private LaggerComponent configure() {

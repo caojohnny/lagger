@@ -21,6 +21,7 @@ public interface LaggerComponent {
     EventSnifferCommand newESniffCmd();
     ChunkCommand newChunkCmd();
     SetSlotCommand newSetSlotCmd();
+    CopyPluginsCommand newCopyPluginsCmd();
 
     @Component.Builder
     interface Builder {
