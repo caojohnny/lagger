@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
@@ -149,6 +150,12 @@ public class CopyPluginsCommand implements CommandExecutor {
                         logger.info(output);
                     }
                     logger.info("--------------------------------------------");
+                    logger.info("---------- /COPYPLUGINS COMPLETE -----------");
+
+                    Player newSender = Bukkit.getPlayer(finalSender.getName());
+                    if (newSender != null) {
+                        newSender.sendMessage("---------- /COPYPLUGINS COMPLETE -----------");
+                    }
                 }, 3L);
             }, "Lagger CP Echo Waiter").start();
 
