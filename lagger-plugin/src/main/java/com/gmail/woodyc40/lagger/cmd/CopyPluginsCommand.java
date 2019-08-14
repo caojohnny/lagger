@@ -36,7 +36,7 @@ public class CopyPluginsCommand implements CommandExecutor {
         }
 
         List<String> commandOutput = new ArrayList<>();
-        sender = new DelegateCommandSender(sender) {
+        DelegateCommandSender dcs = new DelegateCommandSender(sender) {
             @Override
             public void sendMessage(String s) {
                 commandOutput.add(s);
@@ -64,7 +64,7 @@ public class CopyPluginsCommand implements CommandExecutor {
                         }
                     }
                     if (plugin == null) {
-                        sender.sendMessage(format("Unsure where to get the data dir for plugin '%s'. Abort.", pluginName));
+                        dcs.sendMessage(format("Unsure where to get the data dir for plugin '%s'. Abort.", pluginName));
                         return true;
                     }
 
@@ -75,7 +75,7 @@ public class CopyPluginsCommand implements CommandExecutor {
                     filesToDelete.add(file);
                 }
             } else {
-                sender.sendMessage(format("Not sure what to do with '%s'. Abort.", args[0]));
+                dcs.sendMessage(format("Not sure what to do with '%s'. Abort.", args[0]));
                 return true;
             }
         }
@@ -85,7 +85,7 @@ public class CopyPluginsCommand implements CommandExecutor {
         File copyFile = new File(root, "copy.sh");
         String copyFilePath = copyFile.getAbsolutePath();
         if (!copyFile.exists()) {
-            sender.sendMessage(format("No file exists to copy all plugins: %s", copyFilePath));
+            dcs.sendMessage(format("No file exists to copy all plugins: %s", copyFilePath));
             return true;
         }
 
@@ -96,39 +96,27 @@ public class CopyPluginsCommand implements CommandExecutor {
                     .inheritIO()
                     .start();
         } catch (IOException e) {
-            sender.sendMessage("Failed to run the process");
+            dcs.sendMessage("Failed to run the process");
             this.plugin.getLogger().log(Level.SEVERE, "Failed to initiate /bin/sh to execute copy file", e);
             return true;
         }
 
-        CommandSender finalSender = sender;
         proc.onExit().thenRunAsync(() -> {
-            finalSender.sendMessage("Copying has completed. Check console in case anything went wrong.");
-            finalSender.sendMessage("Deleting any requested data folders...");
+            dcs.sendMessage("Copying has completed. Check console in case anything went wrong.");
+            dcs.sendMessage("Deleting any requested files...");
             if (filesToDelete.isEmpty()) {
-                finalSender.sendMessage("None specified. Proceeding...");
+                dcs.sendMessage("None specified. Proceeding...");
             } else {
                 for (File file : filesToDelete) {
                     String fileName = file.getPath();
                     if (!file.exists()) {
-                        finalSender.sendMessage(format("Data folder for '%s' not found. Ignoring...", fileName));
+                        dcs.sendMessage(format("  - File '%s' not found. Ignoring...", fileName));
                     } else {
-                        File[] files = file.listFiles();
-                        if (files != null) {
-                            finalSender.sendMessage(format("There are still files in '%s'. Will delete those as well.", fileName));
-                            for (File fileToDelete : files) {
-                                if (!fileToDelete.delete()) {
-                                    finalSender.sendMessage(format("Failed to remove '%s' from queued folder. Abort.", fileToDelete.getPath()));
-                                    return;
-                                }
-                            }
-                        }
-
-                        boolean result = file.delete();
-                        if (!result) {
-                            finalSender.sendMessage(format("Found folder for '%s', but failed to delete. Proceeding...", fileName));
+                        if (this.deleteFile(file)) {
+                            dcs.sendMessage(format("  - Deleted the file '%s', as requested.", fileName));
                         } else {
-                            finalSender.sendMessage(format("Deleted the file '%s', as requested.", fileName));
+                            dcs.sendMessage(format("Found file '%s', but failed to delete. Abort.", fileName));
+                            return;
                         }
                     }
                 }
@@ -150,19 +138,45 @@ public class CopyPluginsCommand implements CommandExecutor {
                         logger.info(output);
                     }
                     logger.info("--------------------------------------------");
-                    logger.info("---------- /COPYPLUGINS COMPLETE -----------");
+                    logger.info("");
+                    logger.info("          /COPYPLUGINS COMPLETE           ");
+                    logger.info("");
+                    logger.info("--------------------------------------------");
 
-                    Player newSender = Bukkit.getPlayer(finalSender.getName());
-                    if (newSender != null) {
-                        newSender.sendMessage("---------- /COPYPLUGINS COMPLETE -----------");
+                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        if (onlinePlayer.hasPermission("lagger.copyplugins")) {
+                            if (!dcs.matches(onlinePlayer)) {
+                                onlinePlayer.sendMessage("--------------------------------------------");
+                                onlinePlayer.sendMessage("Echoing output from /copyplugins...");
+                                for (String output : commandOutput) {
+                                    onlinePlayer.sendMessage(output);
+                                }
+                            }
+                            onlinePlayer.sendMessage("-----------------------------------");
+                            onlinePlayer.sendMessage("");
+                            onlinePlayer.sendMessage("          /COPYPLUGINS COMPLETE");
+                            onlinePlayer.sendMessage("");
+                            onlinePlayer.sendMessage("-----------------------------------");
+                        }
                     }
                 }, 3L);
             }, "Lagger CP Echo Waiter").start();
 
-            finalSender.sendMessage("Server will be reloaded. Remember that this command is not meant to be used in production.");
+            dcs.sendMessage("Server will be reloaded. Remember that this command is not meant to be used in production.");
             Bukkit.reload();
         }, command1 -> Bukkit.getScheduler().runTask(this.plugin, command1));
 
         return true;
+    }
+
+    private boolean deleteFile(File file) {
+        File[] files = file.listFiles();
+        if (files != null) {
+            for (File content : files) {
+                this.deleteFile(content);
+            }
+        }
+
+        return file.delete();
     }
 }

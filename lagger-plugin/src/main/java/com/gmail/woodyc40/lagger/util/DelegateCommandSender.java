@@ -1,7 +1,10 @@
 package com.gmail.woodyc40.lagger.util;
 
 import org.bukkit.Server;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -14,6 +17,22 @@ public class DelegateCommandSender implements CommandSender {
 
     public DelegateCommandSender(CommandSender delegate) {
         this.delegate = delegate;
+    }
+
+    public boolean matches(CommandSender sender) {
+        if (this.delegate instanceof ConsoleCommandSender) {
+            return sender instanceof ConsoleCommandSender;
+        }
+
+        if (this.delegate instanceof BlockCommandSender) {
+            return sender instanceof BlockCommandSender;
+        }
+
+        if (this.delegate instanceof Player && sender instanceof Player) {
+            return sender.getName().equals(this.delegate.getName());
+        }
+
+        return false;
     }
 
     @Override
