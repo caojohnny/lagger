@@ -2,6 +2,7 @@ package com.gmail.woodyc40.lagger;
 
 import com.gmail.woodyc40.lagger.cmd.*;
 import com.gmail.woodyc40.lagger.config.Config;
+import com.gmail.woodyc40.lagger.listener.DebugModeListener;
 import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
 import com.gmail.woodyc40.lagger.module.NmsModule;
 import dagger.BindsInstance;
@@ -16,12 +17,15 @@ public interface LaggerComponent {
     PacketSniffer getPacketSniffer();
 
     PacketSnifferListener newPacketSnifferListener();
+    DebugModeListener newDebugModeListener();
+
     OpenHeadInventoryCommand newOhiCmd();
     PacketSnifferCommand newPSniffCmd();
     EventSnifferCommand newESniffCmd();
     ChunkCommand newChunkCmd();
     SetSlotCommand newSetSlotCmd();
     CopyPluginsCommand newCopyPluginsCmd();
+    DebugModeCommand newDebugModeCmd();
 
     @Component.Builder
     interface Builder {

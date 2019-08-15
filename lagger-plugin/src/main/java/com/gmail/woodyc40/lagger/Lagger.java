@@ -1,8 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
-import com.gmail.woodyc40.lagger.cmd.ClearInventoryCommand;
-import com.gmail.woodyc40.lagger.cmd.PauseCommand;
-import com.gmail.woodyc40.lagger.cmd.RunAsCmd;
+import com.gmail.woodyc40.lagger.cmd.*;
 import com.gmail.woodyc40.lagger.module.NmsModule;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_13_R01;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_14_R01;
@@ -29,6 +27,7 @@ public class Lagger extends JavaPlugin {
 
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(component.newPacketSnifferListener(), this);
+        pm.registerEvents(component.newDebugModeListener(), this);
 
         this.registerCommand("pause", new PauseCommand());
         this.registerCommand("ohi", component.newOhiCmd());
@@ -39,6 +38,9 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("setslot", component.newSetSlotCmd());
         this.registerCommand("runas", new RunAsCmd());
         this.registerCommand("copyplugins", component.newCopyPluginsCmd());
+        this.registerCommand("runterm", new RunTermCommand());
+        this.registerCommand("hurt", new HurtCommand());
+        this.registerCommand("debugmode", component.newDebugModeCmd());
     }
 
     private LaggerComponent configure() {

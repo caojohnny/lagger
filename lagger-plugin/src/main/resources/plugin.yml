@@ -32,3 +32,12 @@ commands:
     aliases: [ cp ]
     usage: /copyplugins [del [files...]]
     description: Uses a script to copy plugins to your plugin dir, optionally removing files, and reloading the server
+  runterm:
+    usage: /runterm <command...>
+    description: Runs a command as console
+  hurt:
+    usage: /hurt [hunger] [target] <amount>
+    description: Hurts (or heals for negative amounts), or modifies the hunger bar if specified
+  debugmode:
+    usage: /debugmode
+    description: Makes debugging easier by giving the player special abilities
