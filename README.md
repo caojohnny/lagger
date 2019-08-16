@@ -60,6 +60,12 @@ allowed to heal), or the same for your hunger bar
 server time, disables damage to you, prevents mob
 targeting, etc. to make debugging easier
 
+# Things I'm Considering
+
+- Since this plugin was meant to be standalone, it would be
+nice to have a `/heal` and a `/item` command like
+EssentialsX
+
 # Credits
 
 Built with [IntelliJ IDEA](https://www.jetbrains.com/idea/)

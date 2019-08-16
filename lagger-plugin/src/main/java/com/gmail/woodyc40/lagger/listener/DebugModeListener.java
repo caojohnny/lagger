@@ -34,6 +34,11 @@ public class DebugModeListener implements Listener {
 
             for (World world : Bukkit.getWorlds()) {
                 world.setTime(6000);
+
+                // WeatherChangeEvent doesn't let us know if a plugin
+                // is changing it, so just keep extending the time
+                // for whatever weather is being set indefinitely
+                world.setWeatherDuration(Integer.MAX_VALUE);
             }
         }, 1L, 1L);
     }

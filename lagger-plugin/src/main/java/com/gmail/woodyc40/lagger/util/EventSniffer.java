@@ -10,14 +10,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.logging.Logger;
 
 public class EventSniffer {
@@ -46,6 +43,7 @@ public class EventSniffer {
     private boolean sniffing;
     private boolean dumpEnabled;
 
+    @Inject
     public EventSniffer(JavaPlugin plugin) {
         this.plugin = plugin;
         this.inspector = new FieldInspector(plugin);

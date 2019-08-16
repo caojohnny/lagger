@@ -1,6 +1,5 @@
 package com.gmail.woodyc40.lagger.cmd;
 
-import com.gmail.woodyc40.lagger.Lagger;
 import com.gmail.woodyc40.lagger.util.EventSniffer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,13 +8,11 @@ import org.bukkit.command.CommandSender;
 import javax.inject.Inject;
 
 public class EventSnifferCommand implements CommandExecutor {
-    private final Lagger plugin;
     private final EventSniffer sniffer;
 
     @Inject
-    public EventSnifferCommand(Lagger plugin) {
-        this.plugin = plugin;
-        this.sniffer = new EventSniffer(plugin);
+    public EventSnifferCommand(EventSniffer sniffer) {
+        this.sniffer = sniffer;
     }
 
     @Override

@@ -5,9 +5,11 @@ import com.gmail.woodyc40.lagger.module.NmsModule;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_13_R01;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_14_R01;
 import com.gmail.woodyc40.lagger.module.NmsModule_v1_8_R01;
+import com.gmail.woodyc40.lagger.util.EventSniffer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,31 +18,47 @@ import java.util.logging.Level;
 import static java.lang.String.format;
 
 public class Lagger extends JavaPlugin {
+    private final LaggerComponent cmp;
+
+    public Lagger() {
+        this.cmp = this.configure();
+    }
+
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
 
-        LaggerComponent component = this.configure();
-        for (String packetName : component.getConfig().getDefaultSnifferFilter()) {
-            component.getPacketSniffer().filter(packetName);
+        for (String packetName : this.cmp.getConfig().getDefaultSnifferFilter()) {
+            this.cmp.getPacketSniffer().filter(packetName);
         }
 
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(component.newPacketSnifferListener(), this);
-        pm.registerEvents(component.newDebugModeListener(), this);
+        pm.registerEvents(this.cmp.newPacketSnifferListener(), this);
+        pm.registerEvents(this.cmp.newDebugModeListener(), this);
 
         this.registerCommand("pause", new PauseCommand());
-        this.registerCommand("ohi", component.newOhiCmd());
-        this.registerCommand("psniff", component.newPSniffCmd());
-        this.registerCommand("esniff", component.newESniffCmd());
-        this.registerCommand("chunk", component.newChunkCmd());
+        this.registerCommand("ohi", this.cmp.newOhiCmd());
+        this.registerCommand("psniff", this.cmp.newPSniffCmd());
+        this.registerCommand("esniff", this.cmp.newESniffCmd());
+        this.registerCommand("chunk", this.cmp.newChunkCmd());
         this.registerCommand("ci", new ClearInventoryCommand());
-        this.registerCommand("setslot", component.newSetSlotCmd());
+        this.registerCommand("setslot", this.cmp.newSetSlotCmd());
         this.registerCommand("runas", new RunAsCmd());
-        this.registerCommand("copyplugins", component.newCopyPluginsCmd());
+        this.registerCommand("copyplugins", this.cmp.newCopyPluginsCmd());
         this.registerCommand("runterm", new RunTermCommand());
         this.registerCommand("hurt", new HurtCommand());
-        this.registerCommand("debugmode", component.newDebugModeCmd());
+        this.registerCommand("debugmode", this.cmp.newDebugModeCmd());
+    }
+
+    @Override
+    public void onDisable() {
+        PacketSniffer ps = this.cmp.getPacketSniffer();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ps.unsniff(player);
+        }
+
+        EventSniffer es = this.cmp.getEventSniffer();
+        es.unsniff();
     }
 
     private LaggerComponent configure() {

@@ -5,6 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
@@ -51,6 +54,7 @@ public class DebugModeCommand implements CommandExecutor {
             sender.sendMessage("  - Allows you to fly");
             sender.sendMessage("  - Fixes the time to day");
             sender.sendMessage("  - Sets the current world's spawn to your location");
+            sender.sendMessage("  - Locks the current world weather");
         }
 
         return true;
@@ -62,6 +66,16 @@ public class DebugModeCommand implements CommandExecutor {
 
         Location location = player.getLocation();
         location.getWorld().setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+
+        for (Entity entity : player.getNearbyEntities(20, 20, 20)) {
+            if (entity instanceof Creature) {
+                Creature c = (Creature) entity;
+                LivingEntity currentTarget = c.getTarget();
+                if (currentTarget != null && currentTarget.equals(player)) {
+                    c.setTarget(null);
+                }
+            }
+        }
     }
 
     private static void disableDebugMode(Player player) {
