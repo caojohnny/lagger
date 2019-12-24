@@ -1,10 +1,7 @@
 package com.gmail.woodyc40.lagger;
 
 import com.gmail.woodyc40.lagger.cmd.*;
-import com.gmail.woodyc40.lagger.module.NmsModule;
-import com.gmail.woodyc40.lagger.module.NmsModule_v1_13_R01;
-import com.gmail.woodyc40.lagger.module.NmsModule_v1_14_R01;
-import com.gmail.woodyc40.lagger.module.NmsModule_v1_8_R01;
+import com.gmail.woodyc40.lagger.module.*;
 import com.gmail.woodyc40.lagger.util.EventSniffer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -43,11 +40,12 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("chunk", this.cmp.newChunkCmd());
         this.registerCommand("ci", new ClearInventoryCommand());
         this.registerCommand("setslot", this.cmp.newSetSlotCmd());
-        this.registerCommand("runas", new RunAsCmd());
+        this.registerCommand("runas", new RunAsCommand());
         this.registerCommand("copyplugins", this.cmp.newCopyPluginsCmd());
         this.registerCommand("runterm", new RunTermCommand());
         this.registerCommand("hurt", new HurtCommand());
         this.registerCommand("debugmode", this.cmp.newDebugModeCmd());
+        this.registerCommand("lca", this.cmp.newLcaCmd());
     }
 
     @Override
@@ -63,20 +61,26 @@ public class Lagger extends JavaPlugin {
 
     private LaggerComponent configure() {
         NmsModule nmsModule;
+        AsyncChunkLoader acl = null;
 
         String version = Bukkit.getBukkitVersion();
-        if (version.startsWith("1.14")) {
+        if (version.startsWith("1.15")) {
+            nmsModule = new NmsModule_v1_15_R01();
+        } else if (version.startsWith("1.14")) {
             nmsModule = new NmsModule_v1_14_R01();
 
             /* PluginManager pm = Bukkit.getPluginManager();
             pm.registerEvents(new DismountListener(), this);
-            this.getLogger().info("Registered DismountListener");
+            this.getLogger().info("Registered DismountListener"); */
 
             String serverVersion = Bukkit.getVersion();
             if (serverVersion.toLowerCase().contains("paper")) {
-                pm.registerEvents(new EntityRemoveListener(), this);
-                this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
-            } */
+                // pm.registerEvents(new EntityRemoveListener(), this);
+                // this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
+
+                acl = new AsyncChunkLoaderPaper114();
+                this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.14");
+            }
         } else if (version.startsWith("1.13")) {
             nmsModule = new NmsModule_v1_13_R01();
         } else if (version.startsWith("1.8")) {
@@ -89,6 +93,7 @@ public class Lagger extends JavaPlugin {
         return DaggerLaggerComponent
                 .builder()
                 .plugin(this)
+                .asyncChunkLoader(acl)
                 .nmsModule(nmsModule)
                 .build();
     }

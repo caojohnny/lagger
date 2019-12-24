@@ -10,6 +10,7 @@ import com.gmail.woodyc40.lagger.util.EventSniffer;
 import dagger.BindsInstance;
 import dagger.Component;
 
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 @Singleton
@@ -29,10 +30,12 @@ public interface LaggerComponent {
     SetSlotCommand newSetSlotCmd();
     CopyPluginsCommand newCopyPluginsCmd();
     DebugModeCommand newDebugModeCmd();
+    LoadChunkAsyncCommand newLcaCmd();
 
     @Component.Builder
     interface Builder {
         @BindsInstance Builder plugin(Lagger plugin);
+        @BindsInstance Builder asyncChunkLoader(@Nullable AsyncChunkLoader acl);
         Builder nmsModule(NmsModule module);
         LaggerComponent build();
     }

@@ -11,24 +11,24 @@ public class NmsModule {
     @Provides
     @Singleton
     ChunkCompat provideChunkCompat() {
-        return null;
+        throw new RuntimeException();
     }
 
     @Provides
     @Singleton
     PacketSniffer providePacketSniffer(Lagger plugin) {
-        return null;
+        throw new RuntimeException();
     }
 
     @Provides
     @Singleton
     SkullCompat provideSkullCompat() {
-        return null;
+        throw new RuntimeException();
     }
 
     @Provides
     @Singleton
     SetSlotCompat provideSetSlotCompat() {
-        return null;
+        throw new RuntimeException();
     }
 }

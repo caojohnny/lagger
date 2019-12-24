@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import static java.lang.String.format;
 
-public class RunAsCmd implements CommandExecutor {
+public class RunAsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("lagger.runas")) {
