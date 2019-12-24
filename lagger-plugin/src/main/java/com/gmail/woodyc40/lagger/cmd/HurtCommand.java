@@ -72,11 +72,6 @@ public class HurtCommand implements CommandExecutor {
 
         if (args.length == 3) {
             if ("hunger".equalsIgnoreCase(args[0])) {
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage("You are not a player!");
-                    return true;
-                }
-
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
                     sender.sendMessage(format("Player '%s' is not online!", args[1]));
