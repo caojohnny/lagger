@@ -59,6 +59,8 @@ allowed to heal), or the same for your hunger bar
 - `/debugmode` - enters debug mode, which freezes the
 server time, disables damage to you, prevents mob
 targeting, etc. to make debugging easier
+- `/lca` - loads a chunk somewhere asynchronously (if
+supported)
 
 # Things I'm Considering
 
