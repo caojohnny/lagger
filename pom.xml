@@ -20,6 +20,7 @@
         <module>lagger-compat-v1_14_R01</module>
         <module>lagger-compat-paper-v1_14_2_R01</module>
         <module>lagger-compat-v1_15_R01</module>
+        <module>lagger-compat-paper-v1_15_R01</module>
     </modules>
 
     <repositories>

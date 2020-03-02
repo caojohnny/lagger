@@ -64,8 +64,17 @@ public class Lagger extends JavaPlugin {
         AsyncChunkLoader acl = null;
 
         String version = Bukkit.getBukkitVersion();
+        String serverVersion = Bukkit.getVersion();
         if (version.startsWith("1.15")) {
             nmsModule = new NmsModule_v1_15_R01();
+
+            if (serverVersion.toLowerCase().contains("paper")) {
+                // pm.registerEvents(new EntityRemoveListener(), this);
+                // this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
+
+                acl = new AsyncChunkLoaderPaper115();
+                this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.15");
+            }
         } else if (version.startsWith("1.14")) {
             nmsModule = new NmsModule_v1_14_R01();
 
@@ -73,7 +82,6 @@ public class Lagger extends JavaPlugin {
             pm.registerEvents(new DismountListener(), this);
             this.getLogger().info("Registered DismountListener"); */
 
-            String serverVersion = Bukkit.getVersion();
             if (serverVersion.toLowerCase().contains("paper")) {
                 // pm.registerEvents(new EntityRemoveListener(), this);
                 // this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
