@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <dagger.version>2.25.3</dagger.version>
+        <dagger.version>2.27</dagger.version>
+        <javac.version>9+181-r4173-1</javac.version>
     </properties>
 
     <groupId>com.gmail.woodyc40</groupId>
@@ -39,7 +40,6 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
-                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
 
                     <compilerArgs>
                         <arg>-XDcompilePolicy=simple</arg>
@@ -54,11 +54,34 @@
                         <path>
                             <groupId>com.google.errorprone</groupId>
                             <artifactId>error_prone_core</artifactId>
-                            <version>2.3.4</version>
+                            <version>2.3.2</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <fork>true</fork>
+                            <compilerArgs combine.children="append">
+                                <arg>-J-Xbootclasspath/p:${settings.localRepository}/com/google/errorprone/javac/${javac.version}/javac-${javac.version}.jar</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
