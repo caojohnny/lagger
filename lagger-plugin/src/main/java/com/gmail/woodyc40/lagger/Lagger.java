@@ -65,7 +65,9 @@ public class Lagger extends JavaPlugin {
 
         String version = Bukkit.getBukkitVersion();
         String serverVersion = Bukkit.getVersion();
-        if (version.startsWith("1.15")) {
+        if (version.startsWith("1.16")) {
+            nmsModule = new NmsModule_v1_16_R01();
+        } else if (version.startsWith("1.15")) {
             nmsModule = new NmsModule_v1_15_R01();
 
             if (serverVersion.toLowerCase().contains("paper")) {
