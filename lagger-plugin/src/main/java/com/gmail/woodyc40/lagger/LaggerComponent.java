@@ -31,6 +31,7 @@ public interface LaggerComponent {
     CopyPluginsCommand newCopyPluginsCmd();
     DebugModeCommand newDebugModeCmd();
     LoadChunkAsyncCommand newLcaCmd();
+    SpawnArmorStandCommand newSasCmd();
 
     @Component.Builder
     interface Builder {

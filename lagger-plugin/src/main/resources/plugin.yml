@@ -44,3 +44,6 @@ commands:
   lca:
     usage: /lca [world] <x> <z>
     description: Loads a chunk at the given X and Z coordinates
+  sas:
+    usage: /sas [marker]
+    description: Spawns an armorstand with velocity

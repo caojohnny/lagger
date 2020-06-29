@@ -46,6 +46,7 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("hurt", new HurtCommand());
         this.registerCommand("debugmode", this.cmp.newDebugModeCmd());
         this.registerCommand("lca", this.cmp.newLcaCmd());
+        this.registerCommand("sas", this.cmp.newSasCmd());
     }
 
     @Override
