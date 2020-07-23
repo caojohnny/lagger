@@ -20,3 +20,7 @@ default-sniffer-filter:
   - "PacketPlayOutSpawnEntityLiving"
   - "PacketPlayOutChat"
   - "PacketPlayOutWorldEvent"
+
+# Whether to register a bunch of optional testing commands that are not
+# necessary for the debugging of the server
+register-optional-features: false

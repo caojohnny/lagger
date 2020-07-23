@@ -61,6 +61,8 @@ server time, disables damage to you, prevents mob
 targeting, etc. to make debugging easier
 - `/lca` - loads a chunk somewhere asynchronously (if
 supported)
+- `/sas` - spawns an armor stand with velocity that passes
+through blocks
 
 # Things I'm Considering
 
@@ -72,5 +74,4 @@ EssentialsX
 
 Built with [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 
-Uses [Dagger](https://github.com/google/dagger) and the
-[Checker Framework](https://checkerframework.org/)
+Uses [Dagger](https://github.com/google/dagger).

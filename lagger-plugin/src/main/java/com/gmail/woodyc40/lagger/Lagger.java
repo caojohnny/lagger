@@ -1,6 +1,7 @@
 package com.gmail.woodyc40.lagger;
 
 import com.gmail.woodyc40.lagger.cmd.*;
+import com.gmail.woodyc40.lagger.config.Config;
 import com.gmail.woodyc40.lagger.module.*;
 import com.gmail.woodyc40.lagger.util.EventSniffer;
 import org.bukkit.Bukkit;
@@ -10,12 +11,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.inject.Inject;
 import java.util.logging.Level;
 
 import static java.lang.String.format;
 
 public class Lagger extends JavaPlugin {
     private final LaggerComponent cmp;
+
+    @Inject Config config;
 
     public Lagger() {
         this.cmp = this.configure();
@@ -24,6 +28,7 @@ public class Lagger extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
+        this.cmp.inject(this);
 
         for (String packetName : this.cmp.getConfig().getDefaultSnifferFilter()) {
             this.cmp.getPacketSniffer().filter(packetName);
@@ -34,19 +39,22 @@ public class Lagger extends JavaPlugin {
         pm.registerEvents(this.cmp.newDebugModeListener(), this);
 
         this.registerCommand("pause", new PauseCommand());
-        this.registerCommand("ohi", this.cmp.newOhiCmd());
         this.registerCommand("psniff", this.cmp.newPSniffCmd());
         this.registerCommand("esniff", this.cmp.newESniffCmd());
         this.registerCommand("chunk", this.cmp.newChunkCmd());
         this.registerCommand("ci", new ClearInventoryCommand());
-        this.registerCommand("setslot", this.cmp.newSetSlotCmd());
         this.registerCommand("runas", new RunAsCommand());
         this.registerCommand("copyplugins", this.cmp.newCopyPluginsCmd());
         this.registerCommand("runterm", new RunTermCommand());
         this.registerCommand("hurt", new HurtCommand());
         this.registerCommand("debugmode", this.cmp.newDebugModeCmd());
-        this.registerCommand("lca", this.cmp.newLcaCmd());
-        this.registerCommand("sas", this.cmp.newSasCmd());
+
+        if (this.config.registerOptionalFeatures()) {
+            this.getLogger().info("Optional features has been enabled, performing registration now...");
+            this.registerOptionalFeatures();
+        } else {
+            this.getLogger().info("Optional features has been disabled");
+        }
     }
 
     @Override
@@ -70,25 +78,13 @@ public class Lagger extends JavaPlugin {
             nmsModule = new NmsModule_v1_16_R01();
         } else if (version.startsWith("1.15")) {
             nmsModule = new NmsModule_v1_15_R01();
-
             if (serverVersion.toLowerCase().contains("paper")) {
-                // pm.registerEvents(new EntityRemoveListener(), this);
-                // this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
-
                 acl = new AsyncChunkLoaderPaper115();
                 this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.15");
             }
         } else if (version.startsWith("1.14")) {
             nmsModule = new NmsModule_v1_14_R01();
-
-            /* PluginManager pm = Bukkit.getPluginManager();
-            pm.registerEvents(new DismountListener(), this);
-            this.getLogger().info("Registered DismountListener"); */
-
             if (serverVersion.toLowerCase().contains("paper")) {
-                // pm.registerEvents(new EntityRemoveListener(), this);
-                // this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
-
                 acl = new AsyncChunkLoaderPaper114();
                 this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.14");
             }
@@ -101,12 +97,31 @@ public class Lagger extends JavaPlugin {
         }
 
         this.getLogger().info(format("Registered NMS module for version %s", version));
-        return DaggerLaggerComponent
-                .builder()
+        return DaggerLaggerComponent.builder()
                 .plugin(this)
                 .asyncChunkLoader(acl)
                 .nmsModule(nmsModule)
                 .build();
+    }
+
+    private void registerOptionalFeatures() {
+        this.registerCommand("ohi", this.cmp.newOhiCmd());
+        this.registerCommand("setslot", this.cmp.newSetSlotCmd());
+        this.registerCommand("lca", this.cmp.newLcaCmd());
+        this.registerCommand("sas", this.cmp.newSasCmd());
+
+        PluginManager pm = Bukkit.getPluginManager();
+        String version = Bukkit.getBukkitVersion();
+        if (version.startsWith("1.14")) {
+            pm.registerEvents(new DismountListener(), this);
+            this.getLogger().info("Registered DismountListener");
+        }
+
+        String serverVersion = Bukkit.getVersion();
+        if (serverVersion.toLowerCase().contains("paper")) {
+            pm.registerEvents(new EntityRemoveListener(), this);
+            this.getLogger().info("Registered EntityRemoveListener for PaperSpigot 1.14");
+        }
     }
 
     private void registerCommand(String cmd, CommandExecutor ce) {

@@ -5,7 +5,6 @@ import com.gmail.woodyc40.lagger.config.Config;
 import com.gmail.woodyc40.lagger.listener.DebugModeListener;
 import com.gmail.woodyc40.lagger.listener.PacketSnifferListener;
 import com.gmail.woodyc40.lagger.module.NmsModule;
-import com.gmail.woodyc40.lagger.module.PlugRemapperModule;
 import com.gmail.woodyc40.lagger.util.EventSniffer;
 import dagger.BindsInstance;
 import dagger.Component;
@@ -14,8 +13,10 @@ import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = { NmsModule.class, PlugRemapperModule.class })
+@Component(modules = { NmsModule.class })
 public interface LaggerComponent {
+    void inject(Lagger plugin);
+
     Config getConfig();
     PacketSniffer getPacketSniffer();
     EventSniffer getEventSniffer();

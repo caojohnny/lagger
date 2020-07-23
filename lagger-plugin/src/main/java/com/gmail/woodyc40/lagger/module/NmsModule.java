@@ -6,7 +6,7 @@ import dagger.Provides;
 
 import javax.inject.Singleton;
 
-@Module
+@Module(includes = PlugRemapperModule.class)
 public class NmsModule {
     @Provides
     @Singleton
