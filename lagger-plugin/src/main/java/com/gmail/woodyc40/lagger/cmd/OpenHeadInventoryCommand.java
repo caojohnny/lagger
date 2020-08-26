@@ -58,7 +58,7 @@ public class OpenHeadInventoryCommand implements CommandExecutor {
 
                 sender.sendMessage(String.format("Opening inventory with %s's skull | offline=true seen=%s", targetName, this.openedPlayers.containsKey(targetName)));
                 if (verbose) {
-                    sender.sendMessage(String.format("Head #toString()=%s", item.toString()));
+                    sender.sendMessage(String.format("Head #toString()=%s", item));
                 }
             });
         } else {
@@ -68,7 +68,7 @@ public class OpenHeadInventoryCommand implements CommandExecutor {
 
             sender.sendMessage(String.format("Opening inventory with %s's skull | offline=false", targetName));
             if (verbose) {
-                sender.sendMessage(String.format("Head #toString()=%s", item.toString()));
+                sender.sendMessage(String.format("Head #toString()=%s", item));
             }
         }
 

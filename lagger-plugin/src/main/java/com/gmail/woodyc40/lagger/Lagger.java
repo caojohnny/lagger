@@ -19,7 +19,8 @@ import static java.lang.String.format;
 public class Lagger extends JavaPlugin {
     private final LaggerComponent cmp;
 
-    @Inject Config config;
+    @Inject
+    Config config;
 
     public Lagger() {
         this.cmp = this.configure();
@@ -48,6 +49,7 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("runterm", new RunTermCommand());
         this.registerCommand("hurt", new HurtCommand());
         this.registerCommand("debugmode", this.cmp.newDebugModeCmd());
+        this.registerCommand("getitem", new GetItemCommand());
 
         if (this.config.registerOptionalFeatures()) {
             this.getLogger().info("Optional features has been enabled, performing registration now...");

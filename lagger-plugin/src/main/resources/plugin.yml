@@ -47,3 +47,6 @@ commands:
   sas:
     usage: /sas [marker]
     description: Spawns an armorstand with velocity
+  getitem:
+    usage: /getitem <material> [amount]
+    description: Get an item of the given type with an optional amount

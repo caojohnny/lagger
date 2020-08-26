@@ -63,12 +63,12 @@ targeting, etc. to make debugging easier
 supported)
 - `/sas` - spawns an armor stand with velocity that passes
 through blocks
+- `/getitem` - Get an item of the given type with an optional amount
 
 # Things I'm Considering
 
 - Since this plugin was meant to be standalone, it would be
-nice to have a `/heal` and a `/item` command like
-EssentialsX
+nice to have a `/heal` like EssentialsX
 
 # Credits
 

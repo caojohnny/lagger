@@ -16,6 +16,7 @@ import static java.lang.String.format;
 
 public class SetSlotCommand implements CommandExecutor {
     private static final ItemStack TEST_ITEM_STACK = new ItemStack(Material.DIAMOND_SWORD);
+
     static {
         ItemMeta meta = TEST_ITEM_STACK.getItemMeta();
         meta.setDisplayName("This item is fake");

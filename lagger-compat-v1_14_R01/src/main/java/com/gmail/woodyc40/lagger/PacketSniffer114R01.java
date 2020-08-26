@@ -1,11 +1,6 @@
 package com.gmail.woodyc40.lagger;
 
-import net.minecraft.server.v1_14_R1.EntityPlayer;
-import net.minecraft.server.v1_14_R1.ItemStack;
-import net.minecraft.server.v1_14_R1.MinecraftServer;
-import net.minecraft.server.v1_14_R1.NetworkManager;
-import net.minecraft.server.v1_14_R1.Packet;
-import net.minecraft.server.v1_14_R1.PlayerConnection;
+import net.minecraft.server.v1_14_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_14_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
@@ -69,15 +64,15 @@ public class PacketSniffer114R01 implements PacketSniffer {
                 super.sendPacket(packet);
 
                 String packetName = packet.getClass().getSimpleName();
-                if (filteredPacketNames.contains(packetName.toLowerCase())) {
+                if (PacketSniffer114R01.this.filteredPacketNames.contains(packetName.toLowerCase())) {
                     return;
                 }
 
                 String playerName = ep.getName();
-                plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
+                PacketSniffer114R01.this.plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
 
-                if (dumpEnabled) {
-                    inspector.dump(packet);
+                if (PacketSniffer114R01.this.dumpEnabled) {
+                    PacketSniffer114R01.this.inspector.dump(packet);
                 }
             }
         };

@@ -125,8 +125,8 @@ public class CopyPluginsCommand implements CommandExecutor {
             new Thread(() -> {
                 Plugin newlyLoadedPlugin;
                 do {
-                     newlyLoadedPlugin = Bukkit.getPluginManager().getPlugin(this.plugin.getName());
-                     Thread.yield();
+                    newlyLoadedPlugin = Bukkit.getPluginManager().getPlugin(this.plugin.getName());
+                    Thread.yield();
                 } while (newlyLoadedPlugin == null || newlyLoadedPlugin == this.plugin || !newlyLoadedPlugin.isEnabled());
 
                 Plugin finalNewlyLoadedPlugin = newlyLoadedPlugin;

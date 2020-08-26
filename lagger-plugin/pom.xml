@@ -111,7 +111,9 @@
                     <relocations>
                         <relocation>
                             <pattern>dagger</pattern>
-                            <shadedPattern>com.gmail.woodyc40.lagger.shade.dagger</shadedPattern>
+                            <shadedPattern>
+                                com.gmail.woodyc40.lagger.shade.dagger
+                            </shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

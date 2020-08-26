@@ -13,32 +13,48 @@ import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = { NmsModule.class })
+@Component(modules = {NmsModule.class})
 public interface LaggerComponent {
     void inject(Lagger plugin);
 
     Config getConfig();
+
     PacketSniffer getPacketSniffer();
+
     EventSniffer getEventSniffer();
 
     PacketSnifferListener newPacketSnifferListener();
+
     DebugModeListener newDebugModeListener();
 
     OpenHeadInventoryCommand newOhiCmd();
+
     PacketSnifferCommand newPSniffCmd();
+
     EventSnifferCommand newESniffCmd();
+
     ChunkCommand newChunkCmd();
+
     SetSlotCommand newSetSlotCmd();
+
     CopyPluginsCommand newCopyPluginsCmd();
+
     DebugModeCommand newDebugModeCmd();
+
     LoadChunkAsyncCommand newLcaCmd();
+
     SpawnArmorStandCommand newSasCmd();
 
     @Component.Builder
     interface Builder {
-        @BindsInstance Builder plugin(Lagger plugin);
-        @BindsInstance Builder asyncChunkLoader(@Nullable AsyncChunkLoader acl);
+        @BindsInstance
+        Builder plugin(Lagger plugin);
+
+        @BindsInstance
+        Builder asyncChunkLoader(@Nullable AsyncChunkLoader acl);
+
         Builder nmsModule(NmsModule module);
+
         LaggerComponent build();
     }
 }

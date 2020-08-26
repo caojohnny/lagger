@@ -28,7 +28,9 @@
     <repositories>
         <repository>
             <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <url>
+                https://hub.spigotmc.org/nexus/content/repositories/snapshots/
+            </url>
         </repository>
     </repositories>
 
@@ -77,7 +79,9 @@
                         <configuration>
                             <fork>true</fork>
                             <compilerArgs combine.children="append">
-                                <arg>-J-Xbootclasspath/p:${settings.localRepository}/com/google/errorprone/javac/${javac.version}/javac-${javac.version}.jar</arg>
+                                <arg>
+                                    -J-Xbootclasspath/p:${settings.localRepository}/com/google/errorprone/javac/${javac.version}/javac-${javac.version}.jar
+                                </arg>
                             </compilerArgs>
                         </configuration>
                     </plugin>

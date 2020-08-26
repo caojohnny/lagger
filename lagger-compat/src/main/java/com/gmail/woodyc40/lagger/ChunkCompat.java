@@ -8,7 +8,7 @@ public interface ChunkCompat {
 
     default boolean loadChunk(Chunk chunk) {
         return this.loadChunk(chunk.getWorld(), chunk.getX(), chunk.getZ());
-    };
+    }
 
     boolean unloadChunk(World world, int x, int z);
 
