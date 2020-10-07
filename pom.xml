@@ -7,6 +7,7 @@
     <properties>
         <dagger.version>2.27</dagger.version>
         <javac.version>9+181-r4173-1</javac.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <groupId>com.gmail.woodyc40</groupId>
