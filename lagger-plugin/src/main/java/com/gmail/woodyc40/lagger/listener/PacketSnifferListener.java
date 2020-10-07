@@ -7,6 +7,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import javax.inject.Inject;
 
+/**
+ * The purpose of this listener is to clean-up and disable
+ * the packet listener injection for players that leave the
+ * server.
+ */
 public class PacketSnifferListener implements Listener {
     private final PacketSniffer sniffer;
 

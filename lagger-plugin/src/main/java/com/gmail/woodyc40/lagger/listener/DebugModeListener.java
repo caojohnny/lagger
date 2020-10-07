@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -17,8 +18,16 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The purpose of this listener is to cancel certain events
+ * for debug mode that would make plugin testing easier.
+ */
 @Singleton
 public class DebugModeListener implements Listener {
+    /**
+     * A session-persistent store of players currently in
+     * debug mode.
+     */
     private final Set<UUID> debugging = new HashSet<>();
 
     @Inject
@@ -26,6 +35,12 @@ public class DebugModeListener implements Listener {
         this.startTimeFreeze(plugin);
     }
 
+    /**
+     * Begin a task that will lock the time of day if
+     * anyone is currently debugging.
+     *
+     * @param plugin the Lagger plugin instance
+     */
     private void startTimeFreeze(Lagger plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             if (this.debugging.isEmpty()) {
@@ -33,11 +48,8 @@ public class DebugModeListener implements Listener {
             }
 
             for (World world : Bukkit.getWorlds()) {
-                world.setTime(6000);
-
-                // WeatherChangeEvent doesn't let us know if a plugin
-                // is changing it, so just keep extending the time
-                // for whatever weather is being set indefinitely
+                // Keep these values constant
+                world.setTime(world.getTime());
                 world.setWeatherDuration(Integer.MAX_VALUE);
             }
         }, 1L, 1L);
@@ -74,7 +86,21 @@ public class DebugModeListener implements Listener {
         }
     }
 
-    public Set<UUID> getDebugging() {
-        return this.debugging;
+    /**
+     * Toggles the debug mode of the player. This sets
+     * whether they are currently debugging to the opposite
+     * to their current state.
+     *
+     * @param player the player to toggle the debug mode
+     * @return {@code true} if they are now in debug mode
+     */
+    public boolean toggleDebugMode(Player player) {
+        UUID id = player.getUniqueId();
+        if (this.debugging.remove(id)) {
+            return false;
+        } else {
+            this.debugging.add(id);
+            return true;
+        }
     }
 }

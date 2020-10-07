@@ -4,6 +4,7 @@ import com.gmail.woodyc40.lagger.cmd.*;
 import com.gmail.woodyc40.lagger.config.Config;
 import com.gmail.woodyc40.lagger.module.*;
 import com.gmail.woodyc40.lagger.util.EventSniffer;
+import com.gmail.woodyc40.lagger.util.ServerVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -16,9 +17,18 @@ import java.util.logging.Level;
 
 import static java.lang.String.format;
 
+/**
+ * Plugin main class.
+ */
 public class Lagger extends JavaPlugin {
+    /**
+     * The injector instance
+     */
     private final LaggerComponent cmp;
 
+    /**
+     * Entry-point for the plugin configuration
+     */
     @Inject
     Config config;
 
@@ -29,16 +39,21 @@ public class Lagger extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
+
+        // Perform field injection
         this.cmp.inject(this);
 
+        // Eager initialize the packet sniffing filter
         for (String packetName : this.cmp.getConfig().getDefaultSnifferFilter()) {
             this.cmp.getPacketSniffer().filter(packetName);
         }
 
+        // Register listeners
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(this.cmp.newPacketSnifferListener(), this);
         pm.registerEvents(this.cmp.newDebugModeListener(), this);
 
+        // Register stock commands
         this.registerCommand("pause", new PauseCommand());
         this.registerCommand("psniff", this.cmp.newPSniffCmd());
         this.registerCommand("esniff", this.cmp.newESniffCmd());
@@ -51,6 +66,7 @@ public class Lagger extends JavaPlugin {
         this.registerCommand("debugmode", this.cmp.newDebugModeCmd());
         this.registerCommand("getitem", new GetItemCommand());
 
+        // Registers extra features if enabled in the configuration
         if (this.config.registerOptionalFeatures()) {
             this.getLogger().info("Optional features has been enabled, performing registration now...");
             this.registerOptionalFeatures();
@@ -61,41 +77,60 @@ public class Lagger extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Cleanup the packet sniffer
         PacketSniffer ps = this.cmp.getPacketSniffer();
         for (Player player : Bukkit.getOnlinePlayers()) {
             ps.unsniff(player);
         }
 
+        // Cleanup the event sniffer
         EventSniffer es = this.cmp.getEventSniffer();
         es.unsniff();
     }
 
+    /**
+     * This initializes the Dagger component to faciliate
+     * dependency injection for the plugin.
+     *
+     * @return the project injector component
+     */
     private LaggerComponent configure() {
         NmsModule nmsModule;
         AsyncChunkLoader acl = null;
 
-        String version = Bukkit.getBukkitVersion();
-        String serverVersion = Bukkit.getVersion();
-        if (version.startsWith("1.16")) {
-            nmsModule = new NmsModule_v1_16_R01();
-        } else if (version.startsWith("1.15")) {
-            nmsModule = new NmsModule_v1_15_R01();
-            if (serverVersion.toLowerCase().contains("paper")) {
-                acl = new AsyncChunkLoaderPaper115();
-                this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.15");
-            }
-        } else if (version.startsWith("1.14")) {
-            nmsModule = new NmsModule_v1_14_R01();
-            if (serverVersion.toLowerCase().contains("paper")) {
-                acl = new AsyncChunkLoaderPaper114();
-                this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.14");
-            }
-        } else if (version.startsWith("1.13")) {
-            nmsModule = new NmsModule_v1_13_R01();
-        } else if (version.startsWith("1.8")) {
-            nmsModule = new NmsModule_v1_8_R01();
-        } else {
-            throw new UnsupportedOperationException(format("Bukkit '%s' is not supported", version));
+        ServerVersion version = ServerVersion.getVersion();
+        if (version == null) {
+            throw new UnsupportedOperationException(format("'%s' is not supported",
+                    Bukkit.getVersion()));
+        }
+
+        switch (version) {
+            case V1_8:
+                nmsModule = new NmsModule_v1_8_R01();
+                break;
+            case V1_13:
+                nmsModule = new NmsModule_v1_13_R01();
+                break;
+            case V1_14:
+                nmsModule = new NmsModule_v1_14_R01();
+                if (ServerVersion.isPaper()) {
+                    acl = new AsyncChunkLoaderPaper114();
+                    this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.14");
+                }
+                break;
+            case V1_15:
+                nmsModule = new NmsModule_v1_15_R01();
+                if (ServerVersion.isPaper()) {
+                    acl = new AsyncChunkLoaderPaper115();
+                    this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.15");
+                }
+                break;
+            case V1_16:
+                nmsModule = new NmsModule_v1_16_R01();
+                break;
+            default:
+                throw new UnsupportedOperationException(format("'%s' is not supported",
+                        Bukkit.getVersion()));
         }
 
         this.getLogger().info(format("Registered NMS module for version %s", version));
@@ -106,6 +141,10 @@ public class Lagger extends JavaPlugin {
                 .build();
     }
 
+    /**
+     * Optionally performs additional initialization for
+     * features enabled through the configuration.
+     */
     private void registerOptionalFeatures() {
         this.registerCommand("ohi", this.cmp.newOhiCmd());
         this.registerCommand("setslot", this.cmp.newSetSlotCmd());
@@ -126,6 +165,12 @@ public class Lagger extends JavaPlugin {
         }
     }
 
+    /**
+     * Helper method to debug command registration.
+     *
+     * @param cmd the command name to register
+     * @param ce the handler executor for the command
+     */
     private void registerCommand(String cmd, CommandExecutor ce) {
         PluginCommand pc = this.getCommand(cmd);
         if (pc == null) {

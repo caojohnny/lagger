@@ -7,6 +7,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 
+/**
+ * Access point for the plugin {@code config.yml} file.
+ */
 @Singleton
 public class Config {
     private final List<String> defaultSnifferFilter;
@@ -20,10 +23,22 @@ public class Config {
         this.registerOptionalFeatures = cfg.getBoolean("register-optional-features");
     }
 
+    /**
+     * Obtains the collection of NMS packet class names to
+     * filter from the sniffer.
+     *
+     * @return a list of NMS packet simple class names
+     */
     public List<String> getDefaultSnifferFilter() {
         return this.defaultSnifferFilter;
     }
 
+    /**
+     * Specifies whether or not the optional features should
+     * be enabled.
+     *
+     * @return {@code true} to enable
+     */
     public boolean registerOptionalFeatures() {
         return this.registerOptionalFeatures;
     }
