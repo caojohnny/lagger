@@ -34,12 +34,7 @@ public class DebugModeCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        UUID id = player.getUniqueId();
-        if (this.dml.getDebugging().remove(id)) {
-            disableDebugMode(player);
-            sender.sendMessage("You have disabled debug mode for yourself.");
-        } else {
-            this.dml.getDebugging().add(id);
+        if (this.dml.toggleDebugMode(player)) {
             enableDebugMode(player);
             sender.sendMessage("You have enabled debug mode.");
             sender.sendMessage("Remember that in order to properly test your plugin, " +
@@ -48,13 +43,16 @@ public class DebugModeCommand implements CommandExecutor {
             sender.sendMessage("Debug mode makes testing certain features easier, but it does not " +
                     "substitute for a thorough test.");
             sender.sendMessage("Here are some of the things debug mode does:");
-            sender.sendMessage("  - Disables damage to you");
-            sender.sendMessage("  - Ensures your hunger doesn't drain");
-            sender.sendMessage("  - Prevents hostile mobs from targeting you");
-            sender.sendMessage("  - Allows you to fly");
-            sender.sendMessage("  - Fixes the time to day");
-            sender.sendMessage("  - Sets the current world's spawn to your location");
-            sender.sendMessage("  - Locks the current world weather");
+            sender.sendMessage(" - Disables damage to you");
+            sender.sendMessage(" - Ensures your hunger doesn't drain");
+            sender.sendMessage(" - Prevents hostile mobs from targeting you");
+            sender.sendMessage(" - Allows you to fly");
+            sender.sendMessage(" - Fixes the world time");
+            sender.sendMessage(" - Sets the current world's spawn to your location");
+            sender.sendMessage(" - Locks the current world weather");
+        } else {
+            disableDebugMode(player);
+            sender.sendMessage("You have disabled debug mode for yourself.");
         }
 
         return true;

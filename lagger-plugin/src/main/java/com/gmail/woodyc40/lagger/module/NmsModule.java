@@ -6,6 +6,11 @@ import dagger.Provides;
 
 import javax.inject.Singleton;
 
+/**
+ * Represents an abstract module providing injection
+ * providers for a variety of versioned class (not
+ * necessarily strictly NMS related).
+ */
 @Module(includes = PlugRemapperModule.class)
 public class NmsModule {
     @Provides

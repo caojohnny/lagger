@@ -17,6 +17,11 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+/**
+ * This is a utility used for injecting a listener for
+ * specific events to debug when they are called and from
+ * where.
+ */
 public class EventSniffer {
     private static final String BASE_PACKAGE_NAME = "org.bukkit.event.";
     private static final Set<String> EVENT_SUB_PACKAGES =
@@ -49,6 +54,11 @@ public class EventSniffer {
         this.inspector = new FieldInspector(plugin);
     }
 
+    /**
+     * Enables sniffing, which will cause the events
+     * matching the filter to print debug messages upon
+     * being fired.
+     */
     public void sniff() {
         this.sniffing = true;
 
@@ -62,6 +72,10 @@ public class EventSniffer {
                 Arrays.toString(classNames.toArray())));
     }
 
+    /**
+     * Unsniffs all events being filtered, which
+     * unregisters and performs cleanup.
+     */
     public void unsniff() {
         this.sniffing = false;
 
@@ -70,14 +84,28 @@ public class EventSniffer {
         }
     }
 
+    /**
+     * Enables dumping, which means fired events will print
+     * additional debug information.
+     */
     public void enableDump() {
         this.dumpEnabled = true;
     }
 
+    /**
+     * Disables debug dumps without unsniffing any events.
+     */
     public void disableDump() {
         this.dumpEnabled = false;
     }
 
+    /**
+     * Toggles a filter on the event with the given name.
+     *
+     * @param sender the sender which triggered the toggle
+     *               operation
+     * @param eventName the name of the event toggled
+     */
     public void toggleFilter(CommandSender sender, String eventName) {
         Class<?> cls = findClass(eventName);
         if (cls == null) {
@@ -136,6 +164,13 @@ public class EventSniffer {
         sender.sendMessage(String.format("Added %s to the event filter", eventName));
     }
 
+    /**
+     * Handles the given event being called, printing a
+     * debug message to the console and dumping debug
+     * information as necessary.
+     *
+     * @param event the event being called
+     */
     private void inspectEvent(Event event) {
         Logger logger = this.plugin.getLogger();
         logger.info("EVENT FIRED: " + event.getClass().getSimpleName());
@@ -145,6 +180,12 @@ public class EventSniffer {
         }
     }
 
+    /**
+     * Search procedure for a class of the given name.
+     *
+     * @param eventName the name of the event
+     * @return the event class, if found or {@code null}
+     */
     private static Class<?> findClass(String eventName) {
         // Attempt to find as if eventName is fully qualified
         try {
@@ -172,15 +213,36 @@ public class EventSniffer {
         return null;
     }
 
+    /**
+     * A wrapper over a listener which can be registered
+     * and unregistered to clean up.
+     */
     private static class ProxyListener {
         private final HandlerList handlerList;
         private final RegisteredListener listener;
 
+        /**
+         * Creates a new proxy listener that will be
+         * assigned to the given HandlerList with the given
+         * listener that will handle the events.
+         *
+         * <p>Initially, this is disabled, meaning that
+         * {@link #enable()} needs to be called.</p>
+         *
+         * @param handlerList the collection of handlers
+         *                    for a particular event
+         * @param listener the listener to register
+         */
         public ProxyListener(HandlerList handlerList, RegisteredListener listener) {
             this.handlerList = handlerList;
             this.listener = listener;
         }
 
+        /**
+         * Registers the listener to the HandlerList.
+         *
+         * @throws IllegalStateException if already enabled
+         */
         public void enable() {
             this.handlerList.register(this.listener);
 
@@ -188,6 +250,10 @@ public class EventSniffer {
             this.handlerList.bake();
         }
 
+        /**
+         * Unregisters the listener from the HandlerList.
+         * No-op if not enabled.
+         */
         public void disable() {
             this.handlerList.unregister(this.listener);
 

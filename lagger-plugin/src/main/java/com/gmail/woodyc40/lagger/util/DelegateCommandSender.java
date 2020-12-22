@@ -12,13 +12,33 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
+/**
+ * This is a modified CommandSender subclass that acts as
+ * an adapter for proxying certain methods.
+ */
 public class DelegateCommandSender implements CommandSender {
     private final CommandSender delegate;
 
+    /**
+     * Creates the delegate CommandSender that will forward
+     * calls to the given delegate.
+     *
+     * @param delegate the forwarding target
+     */
     public DelegateCommandSender(CommandSender delegate) {
         this.delegate = delegate;
     }
 
+    /**
+     * Performs a match check against the given sender.
+     * This behaves differently because it assumes that all
+     * console and block command senders will be equal to
+     * their respective types while player senders will
+     * have the same names.
+     *
+     * @param sender the sender to check
+     * @return {@code true} if they match
+     */
     public boolean matches(CommandSender sender) {
         if (this.delegate instanceof ConsoleCommandSender) {
             return sender instanceof ConsoleCommandSender;

@@ -1,7 +1,7 @@
 main: com.gmail.woodyc40.lagger.Lagger
 name: Lagger
 version: 1.0-SNAPSHOT
-api-version: "1.13"
+api-version: "1.14"
 
 commands:
   pause:

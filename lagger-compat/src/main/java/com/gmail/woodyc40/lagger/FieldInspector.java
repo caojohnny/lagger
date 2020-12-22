@@ -8,19 +8,53 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+/**
+ * Utility class that provides debugging support for the
+ * field values of object instances.
+ */
 public class FieldInspector {
     private final JavaPlugin plugin;
     private final List<Consumer<Object>> fieldInfoListeners =
             new ArrayList<>();
 
+    /**
+     * Creates the field inspector using the logger for the
+     * given plugin.
+     *
+     * @param plugin the plugin whose logger will be used
+     *               to debug field values
+     */
     public FieldInspector(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Adds a handler to for a field instance that should
+     * be handled uniquely.
+     *
+     * @param listener the listener to inject into the
+     *                 {@link #dump(Object)} method
+     */
     public void addFieldListener(Consumer<Object> listener) {
         this.fieldInfoListeners.add(listener);
     }
 
+    /**
+     * Obtains the plugin whose logger is being used to
+     * debug field information.
+     *
+     * @return the plugin instance
+     */
+    public JavaPlugin getPlugin() {
+        return this.plugin;
+    }
+
+    /**
+     * Debugs the fields of the given object.
+     *
+     * @param object the object whose fields to print to
+     *               the plugin logger
+     */
     public void dump(Object object) {
         Logger logger = this.plugin.getLogger();
         logger.info("{");
