@@ -85,8 +85,7 @@ public class GetItemCommand implements CommandExecutor {
         }
 
         String legacy = "LEGACY_" + materialName;
-        material = LOOKUP_TABLE.get(legacy);
-        return material;
+        return LOOKUP_TABLE.get(legacy);
     }
 
     private static void giveItem(Player player, ItemStack item) {

@@ -70,6 +70,11 @@ public class Lagger extends JavaPlugin {
         es.unsniff();
     }
 
+    /**
+     * Creates a new injector and configures it.
+     *
+     * @return the Dagger component for injection
+     */
     private LaggerComponent configure() {
         NmsModule nmsModule;
         AsyncChunkLoader acl = null;
@@ -106,6 +111,10 @@ public class Lagger extends JavaPlugin {
                 .build();
     }
 
+    /**
+     * Registers additional "optional" commands and
+     * listeners.
+     */
     private void registerOptionalFeatures() {
         this.registerCommand("ohi", this.cmp.newOhiCmd());
         this.registerCommand("setslot", this.cmp.newSetSlotCmd());
@@ -126,6 +135,13 @@ public class Lagger extends JavaPlugin {
         }
     }
 
+    /**
+     * Procedure used to safely register a command handler
+     * with the command string.
+     *
+     * @param cmd the command string to register
+     * @param ce the handler for that command
+     */
     private void registerCommand(String cmd, CommandExecutor ce) {
         PluginCommand pc = this.getCommand(cmd);
         if (pc == null) {
