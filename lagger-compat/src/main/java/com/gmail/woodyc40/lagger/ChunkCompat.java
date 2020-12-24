@@ -13,8 +13,8 @@ public interface ChunkCompat {
      * given coordinates.
      *
      * @param world the world to load the chunk
-     * @param x the chunk X coordinate
-     * @param z the chunk Z coordinate
+     * @param x     the chunk X coordinate
+     * @param z     the chunk Z coordinate
      * @return {@code true} if the chunk was successfully
      * loaded
      */
@@ -36,8 +36,8 @@ public interface ChunkCompat {
      * chunk coordinates.
      *
      * @param world the world to load the chunk
-     * @param x the chunk X coordinate
-     * @param z the chunk Z coordinate
+     * @param x     the chunk X coordinate
+     * @param z     the chunk Z coordinate
      * @return {@code true} if the chunk was unloaded
      * successfully
      */

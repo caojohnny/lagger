@@ -15,14 +15,14 @@ public interface SetSlotCompat {
      * with the given ID at the given slot to the given
      * item.
      *
-     * @param player the player which to send the update
+     * @param player   the player which to send the update
      * @param windowId the window ID value for the target
      *                 inventory or -2 to use the player
      *                 inventory using an emulated stock
      *                 {@link Inventory#setItem(int, ItemStack)}
      *                 effect
-     * @param slot the slot to set the item
-     * @param item the item to set into the slot
+     * @param slot     the slot to set the item
+     * @param item     the item to set into the slot
      */
     void setSlot(Player player, int windowId, int slot, ItemStack item);
 }

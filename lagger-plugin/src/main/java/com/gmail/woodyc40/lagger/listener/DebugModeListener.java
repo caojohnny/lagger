@@ -55,6 +55,12 @@ public class DebugModeListener implements Listener {
         }, 1L, 1L);
     }
 
+    /**
+     * Cancels damage to players who are currently in debug
+     * mode.
+     *
+     * @param event the injected event
+     */
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
@@ -64,6 +70,12 @@ public class DebugModeListener implements Listener {
         }
     }
 
+    /**
+     * Cancels any changes to the player's hunger level if
+     * they are in debug mode.
+     *
+     * @param event the injected event
+     */
     @EventHandler
     public void onChange(FoodLevelChangeEvent event) {
         HumanEntity entity = event.getEntity();
@@ -73,6 +85,12 @@ public class DebugModeListener implements Listener {
         }
     }
 
+    /**
+     * Cancels any mob targeting actions if the new target
+     * is a player who is in debug mode.
+     *
+     * @param event the injected event
+     */
     @EventHandler
     public void onTarget(EntityTargetEvent event) {
         Entity target = event.getTarget();

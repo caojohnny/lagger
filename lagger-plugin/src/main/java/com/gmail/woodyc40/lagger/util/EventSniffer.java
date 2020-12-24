@@ -102,8 +102,8 @@ public class EventSniffer {
     /**
      * Toggles a filter on the event with the given name.
      *
-     * @param sender the sender which triggered the toggle
-     *               operation
+     * @param sender    the sender which triggered the toggle
+     *                  operation
      * @param eventName the name of the event toggled
      */
     public void toggleFilter(CommandSender sender, String eventName) {
@@ -231,7 +231,7 @@ public class EventSniffer {
          *
          * @param handlerList the collection of handlers
          *                    for a particular event
-         * @param listener the listener to register
+         * @param listener    the listener to register
          */
         public ProxyListener(HandlerList handlerList, RegisteredListener listener) {
             this.handlerList = handlerList;

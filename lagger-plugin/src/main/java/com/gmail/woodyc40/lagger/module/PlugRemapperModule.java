@@ -8,8 +8,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Singleton;
 
+/**
+ * This is a Dagger module that maps instances of the
+ * plugin main class to generic types such as
+ * {@link Plugin} and {@link JavaPlugin}.
+ */
 @Module
-public abstract class PlugRemapperModule {
+public class PlugRemapperModule {
     @Provides
     @Singleton
     public static Plugin providePlugin(Lagger plugin) {

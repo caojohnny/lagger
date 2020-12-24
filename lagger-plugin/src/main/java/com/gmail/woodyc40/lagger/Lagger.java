@@ -170,7 +170,7 @@ public class Lagger extends JavaPlugin {
      * with the command string.
      *
      * @param cmd the command string to register
-     * @param ce the handler for that command
+     * @param ce  the handler for that command
      */
     private void registerCommand(String cmd, CommandExecutor ce) {
         PluginCommand pc = this.getCommand(cmd);

@@ -22,7 +22,7 @@ public interface SkullCompat {
      * Ensures that the skull meta has been set once it is
      * inserted into the inventory.
      *
-     * @param inv the inventory containing the skull
+     * @param inv  the inventory containing the skull
      * @param slot the slot containing the skull
      */
     void ensureSkullTextures(Inventory inv, int slot);

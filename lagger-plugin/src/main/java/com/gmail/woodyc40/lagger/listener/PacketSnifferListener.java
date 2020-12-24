@@ -20,6 +20,12 @@ public class PacketSnifferListener implements Listener {
         this.sniffer = sniffer;
     }
 
+    /**
+     * Unsniffs from the player's connection when they
+     * leave the server.
+     *
+     * @param event the injected event
+     */
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         this.sniffer.unsniff(event.getPlayer());

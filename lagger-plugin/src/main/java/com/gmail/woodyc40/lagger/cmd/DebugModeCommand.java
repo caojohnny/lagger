@@ -11,7 +11,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
-import java.util.UUID;
 
 public class DebugModeCommand implements CommandExecutor {
     private final DebugModeListener dml;
