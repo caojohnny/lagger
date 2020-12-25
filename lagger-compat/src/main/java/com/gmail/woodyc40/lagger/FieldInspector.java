@@ -13,7 +13,14 @@ import java.util.logging.Logger;
  * field values of object instances.
  */
 public class FieldInspector {
+    /**
+     * The instance of the plugin to use for logging.
+     */
     private final JavaPlugin plugin;
+    /**
+     * A collection of field inspectors that print the
+     * contents of the given field type.
+     */
     private final List<Consumer<Object>> fieldInfoListeners =
             new ArrayList<>();
 

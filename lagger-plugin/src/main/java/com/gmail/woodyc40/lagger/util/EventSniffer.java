@@ -23,7 +23,13 @@ import java.util.logging.Logger;
  * where.
  */
 public class EventSniffer {
+    /**
+     * The base package name for Bukkit API events.
+     */
     private static final String BASE_PACKAGE_NAME = "org.bukkit.event.";
+    /**
+     * Sub-packages for Bukkit API events.
+     */
     private static final Set<String> EVENT_SUB_PACKAGES =
             ImmutableSet.of("block.",
                     "enchantment.",
@@ -32,22 +38,55 @@ public class EventSniffer {
                     "inventory.",
                     "painting.", // 1.8-specific
                     "player.",
+                    "raid.",
                     "server.",
                     "vehicle.",
                     "weather.",
                     "world.");
+    /**
+     * A listener that does nothing. This is used as a
+     * dummy to satisfy the non-null contract for a
+     * RegisteredListener instance.
+     */
     private static final Listener NOOP_LISTENER = new Listener() {
     };
 
+    /**
+     * The plugin for which the event sniffer is being
+     * provided.
+     */
     private final JavaPlugin plugin;
+    /**
+     * The FieldInspector containing any custom-registered
+     * inspector functions.
+     */
     private final FieldInspector inspector;
 
+    /**
+     * A mapping of event classes to inactive listeners.
+     */
     private final Map<Class<?>, ProxyListener> cache = new HashMap<>();
+    /**
+     * A mapping of event classes to currently active
+     * listeners.
+     */
     private final Map<Class<?>, ProxyListener> currentListeners = new HashMap<>();
 
+    /**
+     * Whether or not the sniffer has been enabled.
+     */
     private boolean sniffing;
+    /**
+     * Whether or not event details are being dumped.
+     */
     private boolean dumpEnabled;
 
+    /**
+     * An injected constructor that initializes the
+     * necessary state fields for the sniffer.
+     *
+     * @param plugin the plugin that owns this sniffer
+     */
     @Inject
     public EventSniffer(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -215,10 +254,18 @@ public class EventSniffer {
 
     /**
      * A wrapper over a listener which can be registered
-     * and unregistered to clean up.
+     * and unregistered to clean it up.
      */
     private static class ProxyListener {
+        /**
+         * The appropriate HandlerList for which this
+         * listener should be added when enabled.
+         */
         private final HandlerList handlerList;
+        /**
+         * The listener to register to the HandlerList
+         * when enabled.
+         */
         private final RegisteredListener listener;
 
         /**

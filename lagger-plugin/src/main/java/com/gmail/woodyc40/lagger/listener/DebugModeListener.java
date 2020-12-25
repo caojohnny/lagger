@@ -30,6 +30,12 @@ public class DebugModeListener implements Listener {
      */
     private final Set<UUID> debugging = new HashSet<>();
 
+    /**
+     * Creates a new instance of this listener using the
+     * given injected instance of the plugin.
+     *
+     * @param plugin the injected plugin instance
+     */
     @Inject
     public DebugModeListener(Lagger plugin) {
         this.startTimeFreeze(plugin);

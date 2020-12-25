@@ -12,6 +12,9 @@ public enum ServerVersion {
     V1_15("1.15"),
     V1_16("1.16");
 
+    /**
+     * Dot-separated major-minor version string.
+     */
     private final String verString;
 
     /**

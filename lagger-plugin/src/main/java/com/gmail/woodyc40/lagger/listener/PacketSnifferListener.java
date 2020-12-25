@@ -13,8 +13,18 @@ import javax.inject.Inject;
  * server.
  */
 public class PacketSnifferListener implements Listener {
+    /**
+     * The instance of the {@link PacketSniffer} being
+     * used by the plugin.
+     */
     private final PacketSniffer sniffer;
 
+    /**
+     * Creates a new instance of the listener using an
+     * injected instance of the sniffer.
+     *
+     * @param sniffer the injected instance of the sniffer
+     */
     @Inject
     public PacketSnifferListener(PacketSniffer sniffer) {
         this.sniffer = sniffer;
