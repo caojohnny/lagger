@@ -13,6 +13,11 @@ import javax.inject.Inject;
 
 import static java.lang.String.format;
 
+/**
+ * Chunk manipulation and information commands.
+ *
+ * <p>usage: /chunk [load | loadasync | unload | reload | help] [loaded]</p>
+ */
 public class ChunkCommand implements CommandExecutor {
     private final ChunkCompat chunkCompat;
 
@@ -46,6 +51,14 @@ public class ChunkCommand implements CommandExecutor {
         return false;
     }
 
+    /**
+     * Send information about the current chunk and the
+     * chunks in the player's world.
+     *
+     * @param player the player to which to send the
+     *               information
+     * @return whether the command was valid
+     */
     private static boolean sendChunkInfo(Player player) {
         Location location = player.getLocation();
         Chunk chunk = location.getChunk();
@@ -68,6 +81,14 @@ public class ChunkCommand implements CommandExecutor {
         return true;
     }
 
+    /**
+     * Handles the case for the player manipulating the
+     * chunk on which they are standing.
+     *
+     * @param player the player who dispatched the command
+     * @param args the command arguments
+     * @return whether the command is valid
+     */
     private boolean handleLocalChunk(Player player, String[] args) {
         Chunk chunk = player.getLocation().getChunk();
         String coords = getChunkCoords(chunk);
@@ -109,6 +130,14 @@ public class ChunkCommand implements CommandExecutor {
         return false;
     }
 
+    /**
+     * Handles the case for the player manipulating the
+     * loaded chunks in their world.
+     *
+     * @param player the player who dispatched the command
+     * @param args the command arguments
+     * @return whether the command is valid
+     */
     private boolean handleLoadedChunks(Player player, String[] args) {
         if (args[1].equalsIgnoreCase("loaded")) {
             Chunk[] chunks = player.getWorld().getLoadedChunks();
@@ -153,6 +182,13 @@ public class ChunkCommand implements CommandExecutor {
         return false;
     }
 
+    /**
+     * Formats the coordinates of the given chunk as a
+     * X,Z string.
+     *
+     * @param chunk the chunk whose coordinates to format
+     * @return the formatted coordinate string
+     */
     private static String getChunkCoords(Chunk chunk) {
         return format("%d,%d", chunk.getX(), chunk.getZ());
     }

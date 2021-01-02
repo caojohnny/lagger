@@ -20,6 +20,13 @@ import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 
+/**
+ * Runs a {@code copy.sh} script and then reloads the
+ * server to load a new plugin, optionally deleting any
+ * plugin data folders.
+ *
+ * <p>usage: /copyplugins [del [files...]]</p>
+ */
 public class CopyPluginsCommand implements CommandExecutor {
     private final Lagger plugin;
 
@@ -170,6 +177,14 @@ public class CopyPluginsCommand implements CommandExecutor {
         return true;
     }
 
+    /**
+     * Recursively attempts to delete the contents of the
+     * file representing a directory.
+     *
+     * @param file the directory to delete
+     * @return whether or not the directory could be
+     * deleted
+     */
     private boolean deleteFile(File file) {
         File[] files = file.listFiles();
         if (files != null) {

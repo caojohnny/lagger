@@ -7,6 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+/**
+ * Clears the inventory and the armor of the user running
+ * the command.
+ *
+ * <p>usage: /ci</p>
+ */
 public class ClearInventoryCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

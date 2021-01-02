@@ -12,6 +12,14 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+/**
+ * Debugmode toggle command, which enables useeful
+ * features and protections to make debugging easier such
+ * as fixing the world time and turning off weather
+ * changing.
+ *
+ * <p>usage: /debugmode</p>
+ */
 public class DebugModeCommand implements CommandExecutor {
     private final DebugModeListener dml;
 
@@ -57,6 +65,12 @@ public class DebugModeCommand implements CommandExecutor {
         return true;
     }
 
+    /**
+     * Enables the features needed for debugmode for the
+     * given player.
+     *
+     * @param player the player to enable debugmode
+     */
     private static void enableDebugMode(Player player) {
         player.setAllowFlight(true);
         player.setFlying(true);
@@ -75,6 +89,11 @@ public class DebugModeCommand implements CommandExecutor {
         }
     }
 
+    /**
+     * Turns off debugmode for the given player.
+     *
+     * @param player the player to disable debugmode
+     */
     private static void disableDebugMode(Player player) {
         player.setAllowFlight(false);
         player.setFlying(false);

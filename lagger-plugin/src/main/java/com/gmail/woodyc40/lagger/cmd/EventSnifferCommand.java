@@ -7,6 +7,13 @@ import org.bukkit.command.CommandSender;
 
 import javax.inject.Inject;
 
+/**
+ * Permits control over the event sniffer, which allows
+ * listening to certain selected events dynamically at
+ * runtime.
+ *
+ * <p>usage: /esniff [on | off | dump | filter] [arg]</p>
+ */
 public class EventSnifferCommand implements CommandExecutor {
     private final EventSniffer sniffer;
 

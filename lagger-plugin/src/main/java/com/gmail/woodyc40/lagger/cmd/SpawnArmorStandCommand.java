@@ -13,6 +13,14 @@ import org.bukkit.util.Vector;
 
 import javax.inject.Inject;
 
+/**
+ * Spawns an armor stand and gives it a velocity to permit
+ * it to move. The purpose of this command is to test the
+ * effect of {@link ArmorStand#setMarker(boolean)} on the
+ * hitbox of the armor stand.
+ *
+ * <p>usage: /sas [marker]</p>
+ */
 public class SpawnArmorStandCommand implements CommandExecutor {
     private final Lagger plugin;
 
