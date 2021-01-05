@@ -8,6 +8,12 @@ import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 
+/**
+ * Permits command executors to manipulate the plugin's
+ * packet sniffer utility.
+ *
+ * <p>usage: /psniff <on | off | dump | filter> [arg]</p>
+ */
 public class PacketSnifferCommand implements CommandExecutor {
     private final PacketSniffer sniffer;
 

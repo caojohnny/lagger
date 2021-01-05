@@ -16,7 +16,15 @@ import java.util.regex.Pattern;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Gives the command sender an item with the given name.
+ *
+ * <p>usage: /getitem &lt;material&gt; [amount]</p>
+ */
 public class GetItemCommand implements CommandExecutor {
+    /**
+     * Mapping of item names to the material type.
+     */
     private static final Map<String, Material> LOOKUP_TABLE =
             new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
@@ -78,6 +86,15 @@ public class GetItemCommand implements CommandExecutor {
         return false;
     }
 
+    /**
+     * Attempts to find the material type given by the
+     * name string, searching both the modern and legacy
+     * mappings.
+     *
+     * @param materialName the name of the material
+     * @return the material, or {@code null} if no material
+     * with the given name exists
+     */
     private static Material findMaterial(String materialName) {
         Material material = LOOKUP_TABLE.get(materialName);
         if (material != null) {
@@ -88,6 +105,14 @@ public class GetItemCommand implements CommandExecutor {
         return LOOKUP_TABLE.get(legacy);
     }
 
+    /**
+     * Helper function to give the player an item,
+     * otherwise dropping the item if the player's
+     * inventory is full.
+     *
+     * @param player the player to give the item
+     * @param item the item to give the player
+     */
     private static void giveItem(Player player, ItemStack item) {
         Location location = player.getLocation();
         World world = requireNonNull(location.getWorld());

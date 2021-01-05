@@ -8,6 +8,12 @@ import org.bukkit.entity.Player;
 
 import static java.lang.String.format;
 
+/**
+ * This is a sudo command that permits command executors
+ * to run a command as if they were another player.
+ *
+ * <p>usage: /runas &lt;player&gt <command...></p>
+ */
 public class RunAsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

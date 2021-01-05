@@ -14,6 +14,13 @@ import javax.inject.Inject;
 
 import static java.lang.String.format;
 
+/**
+ * This is a test command that allows players to set their
+ * hotbar slot to a certain item while retaining the item
+ * "bounce" animation.
+ *
+ * <p>usage: /setslot <-2 | 0 | update></p>
+ */
 public class SetSlotCommand implements CommandExecutor {
     private static final ItemStack TEST_ITEM_STACK = new ItemStack(Material.DIAMOND_SWORD);
 

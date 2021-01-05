@@ -13,6 +13,12 @@ import javax.inject.Inject;
 
 import static java.lang.String.format;
 
+/**
+ * This command permits command senders to load a given
+ * chunk asynchronously, if supported.
+ *
+ * <p>usage: /lca [world] &lt;x&gt; &lt;z&gt;</p>
+ */
 public class LoadChunkAsyncCommand implements CommandExecutor {
     private final AsyncChunkLoader acl;
 
@@ -59,7 +65,7 @@ public class LoadChunkAsyncCommand implements CommandExecutor {
                 z = Integer.parseInt(args[2]);
             }
         } catch (NumberFormatException e) {
-            sender.sendMessage("The command you entered was malformatted");
+            sender.sendMessage("The command you entered was malformed");
             return true;
         }
 

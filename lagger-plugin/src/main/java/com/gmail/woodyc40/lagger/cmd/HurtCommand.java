@@ -8,6 +8,11 @@ import org.bukkit.entity.Player;
 
 import static java.lang.String.format;
 
+/**
+ * Modifies the hunger or health of a player.
+ *
+ * <p>usage: /hurt [hunger] [target] &lt;amount&gt;</p>
+ */
 public class HurtCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -93,6 +98,14 @@ public class HurtCommand implements CommandExecutor {
         return false;
     }
 
+    /**
+     * Sets the player's health to the given amount,
+     * clamping the health value by the player's maximum
+     * health level.
+     *
+     * @param player the player to set the health
+     * @param newHealth the new health value to set
+     */
     private static void setHealth(Player player, double newHealth) {
         if (newHealth < 0) {
             newHealth = 0;
@@ -105,6 +118,14 @@ public class HurtCommand implements CommandExecutor {
         player.setHealth(newHealth);
     }
 
+    /**
+     * Sets the player's hunger level to the given amount,
+     * clamping the hunger value to within the valid range
+     * of hunger values.
+     *
+     * @param player the player to set the hunger level
+     * @param newHunger the new hunger level
+     */
     private static void setHunger(Player player, int newHunger) {
         if (newHunger < 0) {
             newHunger = 0;

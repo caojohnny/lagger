@@ -16,10 +16,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Opens an inventory containing player skulls whose skull
+ * items can be cached to avoid the texture loading delay.
+ *
+ * <p>usage: /ohi &lt;name&gt; [verbose]</p>
+ */
 public class OpenHeadInventoryCommand implements CommandExecutor {
     private final Lagger plugin;
     private final SkullCompat compat;
 
+    /**
+     * The cache of skull items which contain their skull
+     * textures.
+     */
     private final Map<String, ItemStack> openedPlayers = new HashMap<>();
 
     @Inject
@@ -75,12 +85,28 @@ public class OpenHeadInventoryCommand implements CommandExecutor {
         return true;
     }
 
+    /**
+     * Adds the skull lore to the item to test if setting
+     * the meta clears existing skull textures.
+     *
+     * @param item the item to set the lore
+     */
     private static void addSkullLore(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         meta.setLore(List.of("Don't mind me", "I'm just a test lore"));
         item.setItemMeta(meta);
     }
 
+    /**
+     * Creates the inventory to be opened by the given
+     * player which contains the given skull item in the
+     * center slot.
+     *
+     * @param player the player to create the inventory
+     * @param skull  the skull item to place into the
+     *               inventory
+     * @return the inventory created by this method
+     */
     private Inventory createSkullInv(Player player, ItemStack skull) {
         Inventory inv = Bukkit.createInventory(player, 9);
         inv.setItem(4, skull);

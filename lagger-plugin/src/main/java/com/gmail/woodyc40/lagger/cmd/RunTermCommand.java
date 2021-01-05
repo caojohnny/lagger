@@ -7,6 +7,12 @@ import org.bukkit.command.CommandSender;
 
 import static java.lang.String.format;
 
+/**
+ * This command allows players to run a command as if they
+ * were the terminal or the console.
+ *
+ * <p>usage: /runterm <command...></p>
+ */
 public class RunTermCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

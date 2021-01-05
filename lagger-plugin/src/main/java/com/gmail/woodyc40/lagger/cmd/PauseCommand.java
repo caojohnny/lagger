@@ -4,6 +4,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+/**
+ * This command will block the server's main thread for a
+ * prescribed amount of seconds in a busy wait.
+ */
 public class PauseCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -31,6 +35,13 @@ public class PauseCommand implements CommandExecutor {
         return true;
     }
 
+    /**
+     * This will start a busy-wait loop which performs
+     * thread yielding until the given number of
+     * milliseconds elapses since the method was called.
+     *
+     * @param durationMillis the duration of the busy wait
+     */
     private static void fakeBusyWait(long durationMillis) {
         long beginTime = System.currentTimeMillis();
         while (true) {
