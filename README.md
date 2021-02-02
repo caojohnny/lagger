@@ -86,5 +86,5 @@ Optional commands (enabled through configuration):
 Built with [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 
 Utilizes:
-  * [Dagger](https://github.com/google/dagger).
+  * [Dagger](https://github.com/google/dagger)
   * [error-prone](https://errorprone.info/)
