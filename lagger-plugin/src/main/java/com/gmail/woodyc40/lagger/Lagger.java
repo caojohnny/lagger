@@ -108,6 +108,18 @@ public class Lagger extends JavaPlugin {
             case V1_8:
                 nmsModule = new NmsModule_v1_8_R01();
                 break;
+            case V1_9:
+                nmsModule = new NmsModule_v1_9_R01();
+                break;
+            case V1_10:
+                nmsModule = new NmsModule_v1_10_R01();
+                break;
+            case V1_11:
+                nmsModule = new NmsModule_v1_11_R01();
+                break;
+            case V1_12:
+                nmsModule = new NmsModule_v1_12_R01();
+                break;
             case V1_13:
                 nmsModule = new NmsModule_v1_13_R01();
                 break;
@@ -127,6 +139,10 @@ public class Lagger extends JavaPlugin {
                 break;
             case V1_16:
                 nmsModule = new NmsModule_v1_16_R01();
+                if (ServerVersion.isPaper()) {
+                    acl = new AsyncChunkLoaderPaper116();
+                    this.getLogger().info("Registered AsyncChunkLoader for PaperSpigot 1.16");
+                }
                 break;
             default:
                 throw new UnsupportedOperationException(format("'%s' is not supported",

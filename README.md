@@ -10,7 +10,29 @@ Not really something production quality because it's just a tool. Feel free to
 look around, the code is high quality and I've done some cool module and
 dependency injection stuff I suppose.
 
+# Features
+
+  * Supports Spigot API versions 1.8.8-1.16.x
+  * Supports Paper API versions 1.14.x and 1.15.x
+  * Supports Java 8-15
+
 # Building
+
+### Prerequisites
+
+  * Maven
+  * Spigot server versions (BuildTools):
+    * 1.8.8
+    * 1.9
+    * 1.10.2  
+    * 1.11
+    * 1.12.2
+    * 1.13.2
+    * 1.14
+    * 1.15
+    * 1.16.1
+
+### Build Commands
 
 ``` shell
 git clone https://github.com/AgentTroll/lagger.git
@@ -18,13 +40,11 @@ cd lagger
 mvn clean install
 ```
 
-Requires Maven and Spigot API and server 1.8.8 installed locally.
-
 # Usage
 
 See `plugin.yml` for commands.
 
-# Features
+# Commands
 
 - `/pause` - pauses the server for a given number of seconds
 - `/psniff` - packet sniffer, allows one to look at the packets sent to a given
@@ -65,4 +85,6 @@ Optional commands (enabled through configuration):
 
 Built with [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 
-Uses [Dagger](https://github.com/google/dagger).
+Utilizes:
+  * [Dagger](https://github.com/google/dagger).
+  * [error-prone](https://errorprone.info/)

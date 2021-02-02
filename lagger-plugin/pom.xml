@@ -49,6 +49,34 @@
 
         <dependency>
             <groupId>com.gmail.woodyc40</groupId>
+            <artifactId>lagger-compat-v1_9_R01</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.woodyc40</groupId>
+            <artifactId>lagger-compat-v1_10_R01</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.woodyc40</groupId>
+            <artifactId>lagger-compat-v1_11_R01</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.woodyc40</groupId>
+            <artifactId>lagger-compat-v1_12_R01</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.woodyc40</groupId>
             <artifactId>lagger-compat-v1_13_R01</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
@@ -63,15 +91,22 @@
 
         <dependency>
             <groupId>com.gmail.woodyc40</groupId>
-            <artifactId>lagger-compat-paper-v1_14_2_R01</artifactId>
+            <artifactId>lagger-compat-v1_15_R01</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.gmail.woodyc40</groupId>
-            <artifactId>lagger-compat-v1_15_R01</artifactId>
+            <artifactId>lagger-compat-v1_16_1_R01</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.woodyc40</groupId>
+            <artifactId>lagger-compat-paper-v1_14_2_R01</artifactId>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -84,8 +119,8 @@
 
         <dependency>
             <groupId>com.gmail.woodyc40</groupId>
-            <artifactId>lagger-compat-v1_16_1_R01</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>lagger-compat-paper-v1_16_R01</artifactId>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

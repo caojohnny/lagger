@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <dagger.version>2.27</dagger.version>
+        <dagger.version>2.31.2</dagger.version>
         <javac.version>9+181-r4173-1</javac.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -17,13 +17,20 @@
     <modules>
         <module>lagger-plugin</module>
         <module>lagger-compat</module>
+
         <module>lagger-compat-v1_8_R01</module>
+        <module>lagger-compat-v1_9_R01</module>
+        <module>lagger-compat-v1_10_R01</module>
+        <module>lagger-compat-v1_11_R01</module>
+        <module>lagger-compat-v1_12_R01</module>
         <module>lagger-compat-v1_13_R01</module>
         <module>lagger-compat-v1_14_R01</module>
-        <module>lagger-compat-paper-v1_14_2_R01</module>
         <module>lagger-compat-v1_15_R01</module>
-        <module>lagger-compat-paper-v1_15_R01</module>
         <module>lagger-compat-v1_16_1_R01</module>
+
+        <module>lagger-compat-paper-v1_14_2_R01</module>
+        <module>lagger-compat-paper-v1_15_R01</module>
+        <module>lagger-compat-paper-v1_16_R01</module>
     </modules>
 
     <repositories>
@@ -56,9 +63,14 @@
                             <version>${dagger.version}</version>
                         </path>
                         <path>
+                            <groupId>com.google.guava</groupId>
+                            <artifactId>guava</artifactId>
+                            <version>30.1-jre</version>
+                        </path>
+                        <path>
                             <groupId>com.google.errorprone</groupId>
                             <artifactId>error_prone_core</artifactId>
-                            <version>2.3.2</version>
+                            <version>2.5.1</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
