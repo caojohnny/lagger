@@ -11,10 +11,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Opens an inventory containing player skulls whose skull
@@ -39,7 +42,10 @@ public class OpenHeadInventoryCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.ohi")) {
             sender.sendMessage("No permission!");
             return true;
@@ -92,7 +98,7 @@ public class OpenHeadInventoryCommand implements CommandExecutor {
      * @param item the item to set the lore
      */
     private static void addSkullLore(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = requireNonNull(item.getItemMeta());
         meta.setLore(List.of("Don't mind me", "I'm just a test lore"));
         item.setItemMeta(meta);
     }

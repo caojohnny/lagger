@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -41,7 +42,10 @@ public class GetItemCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@Nonnull CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Only players may execute this command!");
             return true;
@@ -111,7 +115,7 @@ public class GetItemCommand implements CommandExecutor {
      * inventory is full.
      *
      * @param player the player to give the item
-     * @param item the item to give the player
+     * @param item   the item to give the player
      */
     private static void giveItem(Player player, ItemStack item) {
         Location location = player.getLocation();

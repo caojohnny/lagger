@@ -9,9 +9,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Chunk manipulation and information commands.
@@ -27,7 +29,10 @@ public class ChunkCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.chunk")) {
             sender.sendMessage("No permission!");
             return true;
@@ -59,10 +64,11 @@ public class ChunkCommand implements CommandExecutor {
      *               information
      * @return whether the command was valid
      */
+    @SuppressWarnings("SameReturnValue")
     private static boolean sendChunkInfo(Player player) {
         Location location = player.getLocation();
         Chunk chunk = location.getChunk();
-        World world = location.getWorld();
+        World world = requireNonNull(location.getWorld());
         Chunk[] chunks = world.getLoadedChunks();
 
         int tiles = 0;
@@ -86,7 +92,7 @@ public class ChunkCommand implements CommandExecutor {
      * chunk on which they are standing.
      *
      * @param player the player who dispatched the command
-     * @param args the command arguments
+     * @param args   the command arguments
      * @return whether the command is valid
      */
     private boolean handleLocalChunk(Player player, String[] args) {
@@ -135,7 +141,7 @@ public class ChunkCommand implements CommandExecutor {
      * loaded chunks in their world.
      *
      * @param player the player who dispatched the command
-     * @param args the command arguments
+     * @param args   the command arguments
      * @return whether the command is valid
      */
     private boolean handleLoadedChunks(Player player, String[] args) {

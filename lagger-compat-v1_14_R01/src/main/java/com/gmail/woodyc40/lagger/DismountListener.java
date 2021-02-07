@@ -20,9 +20,8 @@ public class DismountListener implements Listener {
     @EventHandler
     public void onDismount(EntityDismountEvent event) {
         if (event.getDismounted() instanceof Dolphin && event.getEntity() instanceof Player) {
-            if (((Player) event.getEntity()).isSneaking()) {
-                return;
-            } else {
+            Player player = (Player) event.getEntity();
+            if (!player.isSneaking()) {
                 event.setCancelled(true);
             }
         }

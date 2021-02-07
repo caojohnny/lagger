@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Clears the inventory and the armor of the user running
  * the command.
@@ -15,7 +17,10 @@ import org.bukkit.inventory.PlayerInventory;
  */
 public class ClearInventoryCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.ci")) {
             sender.sendMessage("No permission!");
             return true;

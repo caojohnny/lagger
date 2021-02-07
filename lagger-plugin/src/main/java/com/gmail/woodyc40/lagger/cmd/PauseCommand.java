@@ -4,13 +4,18 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import javax.annotation.Nonnull;
+
 /**
  * This command will block the server's main thread for a
  * prescribed amount of seconds in a busy wait.
  */
 public class PauseCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.pause")) {
             sender.sendMessage("No permission!");
             return true;

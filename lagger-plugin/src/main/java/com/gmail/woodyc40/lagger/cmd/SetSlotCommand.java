@@ -10,9 +10,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * This is a test command that allows players to set their
@@ -25,7 +27,7 @@ public class SetSlotCommand implements CommandExecutor {
     private static final ItemStack TEST_ITEM_STACK = new ItemStack(Material.DIAMOND_SWORD);
 
     static {
-        ItemMeta meta = TEST_ITEM_STACK.getItemMeta();
+        ItemMeta meta = requireNonNull(TEST_ITEM_STACK.getItemMeta());
         meta.setDisplayName("This item is fake");
         TEST_ITEM_STACK.setItemMeta(meta);
     }
@@ -38,7 +40,10 @@ public class SetSlotCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.setslot")) {
             sender.sendMessage("No permission!");
             return true;

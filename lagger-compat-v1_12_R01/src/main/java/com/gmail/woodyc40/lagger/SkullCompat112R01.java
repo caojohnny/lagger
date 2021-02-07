@@ -2,6 +2,7 @@ package com.gmail.woodyc40.lagger;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftInventory;
@@ -12,12 +13,20 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import static java.util.Objects.requireNonNull;
+
 public class SkullCompat112R01 implements SkullCompat {
     @Override
+    @SuppressWarnings("deprecation")
     public ItemStack getPlayerSkull(String playerName) {
         ItemStack craftItem = CraftItemStack.asCraftCopy(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3));
         SkullMeta meta = (SkullMeta) craftItem.getItemMeta();
-        meta.setOwner(playerName);
+        Player player = Bukkit.getPlayerExact(playerName);
+        if (player == null) {
+            meta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
+        } else {
+            meta.setOwningPlayer(player);
+        }
         craftItem.setItemMeta(meta);
 
         return craftItem;
@@ -26,15 +35,15 @@ public class SkullCompat112R01 implements SkullCompat {
     @Override
     public void ensureSkullTextures(Inventory inv, int slot) {
         IInventory iinv = ((CraftInventory) inv).getInventory();
-        net.minecraft.server.v1_12_R1.ItemStack item = iinv.getItem(slot);
-        NBTTagCompound tag = item.getTag();
+        net.minecraft.server.v1_12_R1.ItemStack item = requireNonNull(iinv.getItem(slot));
+        NBTTagCompound tag = requireNonNull(item.getTag());
 
         NBTTagCompound skullOwner = (NBTTagCompound) tag.get("SkullOwner");
         if (skullOwner == null) {
             throw new IllegalArgumentException("No SkullOwner NBT tag");
         }
 
-        GameProfile profile = GameProfileSerializer.deserialize(skullOwner);
+        GameProfile profile = requireNonNull(GameProfileSerializer.deserialize(skullOwner));
         if (!profile.getProperties().containsKey("textures")) {
             TileEntitySkull.b(profile, input -> {
                 NBTTagCompound owner = new NBTTagCompound();

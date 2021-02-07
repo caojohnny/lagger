@@ -2,6 +2,7 @@ package com.gmail.woodyc40.lagger.cmd;
 
 import com.gmail.woodyc40.lagger.listener.DebugModeListener;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Debugmode toggle command, which enables useeful
@@ -29,7 +33,10 @@ public class DebugModeCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.debugmode")) {
             sender.sendMessage("No permission!");
             return true;
@@ -43,20 +50,15 @@ public class DebugModeCommand implements CommandExecutor {
         Player player = (Player) sender;
         if (this.dml.toggleDebugMode(player)) {
             enableDebugMode(player);
-            sender.sendMessage("You have enabled debug mode.");
-            sender.sendMessage("Remember that in order to properly test your plugin, " +
-                    "you still need to disable debug mode in order to ensure that your play testing " +
-                    "matches what real players would experience.");
-            sender.sendMessage("Debug mode makes testing certain features easier, but it does not " +
-                    "substitute for a thorough test.");
-            sender.sendMessage("Here are some of the things debug mode does:");
-            sender.sendMessage(" - Disables damage to you");
-            sender.sendMessage(" - Ensures your hunger doesn't drain");
-            sender.sendMessage(" - Prevents hostile mobs from targeting you");
-            sender.sendMessage(" - Allows you to fly");
-            sender.sendMessage(" - Fixes the world time");
-            sender.sendMessage(" - Sets the current world's spawn to your location");
-            sender.sendMessage(" - Locks the current world weather");
+            sender.sendMessage("--- DEBUG MODE ENABLED ---");
+            sender.sendMessage("WARNING: debug mode is NOT a substitute for thorough playtesting");
+            sender.sendMessage("- Damage has been disabled");
+            sender.sendMessage("- Hunger drain is disabled");
+            sender.sendMessage("- Mob targeting is disabled");
+            sender.sendMessage("- Fly has been enabled");
+            sender.sendMessage("- World time has been locked");
+            sender.sendMessage("- Spawn has been relocated here");
+            sender.sendMessage("- Current weather has been locked");
         } else {
             disableDebugMode(player);
             sender.sendMessage("You have disabled debug mode for yourself.");
@@ -76,7 +78,8 @@ public class DebugModeCommand implements CommandExecutor {
         player.setFlying(true);
 
         Location location = player.getLocation();
-        location.getWorld().setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        World world = requireNonNull(location.getWorld());
+        world.setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
 
         for (Entity entity : player.getNearbyEntities(20, 20, 20)) {
             if (entity instanceof Creature) {

@@ -10,6 +10,7 @@ public class ChunkCompat112R01 implements ChunkCompat {
 
     @Override
     public boolean unloadChunk(World world, int x, int z) {
-        return world.unloadChunk(x, z, true, false);
+        // 1.9 deprecates force chunk unloading
+        return world.unloadChunk(x, z, true);
     }
 }

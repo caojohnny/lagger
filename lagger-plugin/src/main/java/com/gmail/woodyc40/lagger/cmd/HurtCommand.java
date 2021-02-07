@@ -1,12 +1,17 @@
 package com.gmail.woodyc40.lagger.cmd;
 
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
+
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Modifies the hunger or health of a player.
@@ -15,7 +20,10 @@ import static java.lang.String.format;
  */
 public class HurtCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.hurt")) {
             sender.sendMessage("No permission!");
             return true;
@@ -103,7 +111,7 @@ public class HurtCommand implements CommandExecutor {
      * clamping the health value by the player's maximum
      * health level.
      *
-     * @param player the player to set the health
+     * @param player    the player to set the health
      * @param newHealth the new health value to set
      */
     private static void setHealth(Player player, double newHealth) {
@@ -111,8 +119,11 @@ public class HurtCommand implements CommandExecutor {
             newHealth = 0;
         }
 
-        if (newHealth > player.getMaxHealth()) {
-            newHealth = player.getMaxHealth();
+        AttributeInstance maxHealthAttr =
+                requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
+        double maxHealth = maxHealthAttr.getValue();
+        if (newHealth > maxHealth) {
+            newHealth = maxHealth;
         }
 
         player.setHealth(newHealth);
@@ -123,7 +134,7 @@ public class HurtCommand implements CommandExecutor {
      * clamping the hunger value to within the valid range
      * of hunger values.
      *
-     * @param player the player to set the hunger level
+     * @param player    the player to set the hunger level
      * @param newHunger the new hunger level
      */
     private static void setHunger(Player player, int newHunger) {

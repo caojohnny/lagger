@@ -10,6 +10,7 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 /**
@@ -56,72 +57,77 @@ public class DelegateCommandSender implements CommandSender {
     }
 
     @Override
-    public void sendMessage(String s) {
+    public void sendMessage(@Nonnull String s) {
         this.delegate.sendMessage(s);
     }
 
     @Override
-    public void sendMessage(String[] strings) {
+    public void sendMessage(@Nonnull String[] strings) {
         this.delegate.sendMessage(strings);
     }
 
     @Override
-    public Server getServer() {
+    public @Nonnull
+    Server getServer() {
         return this.delegate.getServer();
     }
 
     @Override
-    public String getName() {
+    public @Nonnull
+    String getName() {
         return this.delegate.getName();
     }
 
     @Override
-    public Spigot spigot() {
+    public @Nonnull
+    Spigot spigot() {
         return this.delegate.spigot();
     }
 
     @Override
-    public boolean isPermissionSet(String s) {
+    public boolean isPermissionSet(@Nonnull String s) {
         return this.delegate.isPermissionSet(s);
     }
 
     @Override
-    public boolean isPermissionSet(Permission permission) {
+    public boolean isPermissionSet(@Nonnull Permission permission) {
         return this.delegate.isPermissionSet(permission);
     }
 
     @Override
-    public boolean hasPermission(String s) {
+    public boolean hasPermission(@Nonnull String s) {
         return this.delegate.hasPermission(s);
     }
 
     @Override
-    public boolean hasPermission(Permission permission) {
+    public boolean hasPermission(@Nonnull Permission permission) {
         return this.delegate.hasPermission(permission);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin plugin, String s, boolean b) {
+    public @Nonnull
+    PermissionAttachment addAttachment(@Nonnull Plugin plugin, @Nonnull String s, boolean b) {
         return this.delegate.addAttachment(plugin, s, b);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin plugin) {
+    public @Nonnull
+    PermissionAttachment addAttachment(@Nonnull Plugin plugin) {
         return this.delegate.addAttachment(plugin);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin plugin, String s, boolean b, int i) {
+    public PermissionAttachment addAttachment(@Nonnull Plugin plugin, @Nonnull String s, boolean b, int i) {
         return this.delegate.addAttachment(plugin, s, b, i);
     }
 
     @Override
-    public PermissionAttachment addAttachment(Plugin plugin, int i) {
+    public PermissionAttachment addAttachment(@Nonnull Plugin plugin, int i) {
         return this.delegate.addAttachment(plugin, i);
     }
 
     @Override
-    public void removeAttachment(PermissionAttachment permissionAttachment) {
+    public void removeAttachment(@Nonnull PermissionAttachment permissionAttachment) {
         this.delegate.removeAttachment(permissionAttachment);
     }
 
@@ -131,7 +137,8 @@ public class DelegateCommandSender implements CommandSender {
     }
 
     @Override
-    public Set<PermissionAttachmentInfo> getEffectivePermissions() {
+    public @Nonnull
+    Set<PermissionAttachmentInfo> getEffectivePermissions() {
         return this.delegate.getEffectivePermissions();
     }
 

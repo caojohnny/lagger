@@ -12,6 +12,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import static java.util.Objects.requireNonNull;
+
 public class SkullCompat110R01 implements SkullCompat {
     @Override
     public ItemStack getPlayerSkull(String playerName) {
@@ -26,15 +28,15 @@ public class SkullCompat110R01 implements SkullCompat {
     @Override
     public void ensureSkullTextures(Inventory inv, int slot) {
         IInventory iinv = ((CraftInventory) inv).getInventory();
-        net.minecraft.server.v1_10_R1.ItemStack item = iinv.getItem(slot);
-        NBTTagCompound tag = item.getTag();
+        net.minecraft.server.v1_10_R1.ItemStack item = requireNonNull(iinv.getItem(slot));
+        NBTTagCompound tag = requireNonNull(item.getTag());
 
         NBTTagCompound skullOwner = (NBTTagCompound) tag.get("SkullOwner");
         if (skullOwner == null) {
             throw new IllegalArgumentException("No SkullOwner NBT tag");
         }
 
-        GameProfile profile = GameProfileSerializer.deserialize(skullOwner);
+        GameProfile profile = requireNonNull(GameProfileSerializer.deserialize(skullOwner));
         if (!profile.getProperties().containsKey("textures")) {
             TileEntitySkull.b(profile, input -> {
                 NBTTagCompound owner = new NBTTagCompound();

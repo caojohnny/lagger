@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +37,10 @@ public class CopyPluginsCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.copyplugins")) {
             sender.sendMessage("No permission!");
             return true;
@@ -45,7 +49,7 @@ public class CopyPluginsCommand implements CommandExecutor {
         List<String> commandOutput = new ArrayList<>();
         DelegateCommandSender dcs = new DelegateCommandSender(sender) {
             @Override
-            public void sendMessage(String s) {
+            public void sendMessage(@Nonnull String s) {
                 commandOutput.add(s);
                 super.sendMessage(s);
             }

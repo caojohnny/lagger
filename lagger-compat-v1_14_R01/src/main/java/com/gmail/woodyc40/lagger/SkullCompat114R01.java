@@ -7,11 +7,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import static java.util.Objects.requireNonNull;
+
 public class SkullCompat114R01 implements SkullCompat {
     @Override
+    @SuppressWarnings("deprecation")
     public ItemStack getPlayerSkull(String playerName) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta meta = (SkullMeta) item.getItemMeta();
+        SkullMeta meta = (SkullMeta) requireNonNull(item.getItemMeta());
+
         Player player = Bukkit.getPlayerExact(playerName);
         if (player == null) {
             meta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));

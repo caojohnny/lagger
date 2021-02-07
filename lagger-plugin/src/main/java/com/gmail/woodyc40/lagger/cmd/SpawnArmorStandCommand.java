@@ -11,7 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Spawns an armor stand and gives it a velocity to permit
@@ -30,7 +33,10 @@ public class SpawnArmorStandCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             @Nonnull Command command,
+                             @Nonnull String label,
+                             @Nonnull String[] args) {
         if (!sender.hasPermission("lagger.spawnarmorstand")) {
             sender.sendMessage("No permission!");
             return true;
@@ -43,7 +49,7 @@ public class SpawnArmorStandCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         Location location = player.getLocation();
-        World world = location.getWorld();
+        World world = requireNonNull(location.getWorld());
         Vector direction = location.getDirection();
 
         ArmorStand as = world.spawn(location, ArmorStand.class);
