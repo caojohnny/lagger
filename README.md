@@ -35,7 +35,7 @@ dependency injection stuff I suppose.
 ### Build Commands
 
 ``` shell
-git clone https://github.com/AgentTroll/lagger.git
+git clone https://github.com/caojohnny/lagger.git
 cd lagger
 mvn clean install
 ```

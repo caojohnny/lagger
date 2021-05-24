@@ -1,4 +1,4 @@
-package io.github.agenttroll.lagger;
+package io.github.caojohnny.lagger;
 
 import net.minecraft.server.v1_15_R1.Block;
 import net.minecraft.server.v1_15_R1.IBlockData;

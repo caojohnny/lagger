@@ -1,4 +1,4 @@
-package io.github.agenttroll.lagger;
+package io.github.caojohnny.lagger;
 
 import com.gmail.woodyc40.lagger.SkullCompat;
 import org.bukkit.Bukkit;

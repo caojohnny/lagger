@@ -1,11 +1,11 @@
-package io.github.agenttroll.lagger;
+package io.github.caojohnny.lagger;
 
 import com.gmail.woodyc40.lagger.FieldInspector;
 import com.gmail.woodyc40.lagger.PacketSniffer;
-import net.minecraft.server.v1_15_R1.*;
+import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_15_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class PacketSniffer115R01 implements PacketSniffer {
+public class PacketSniffer116R01 implements PacketSniffer {
     private final JavaPlugin plugin;
     private final FieldInspector inspector;
 
@@ -23,7 +23,7 @@ public class PacketSniffer115R01 implements PacketSniffer {
 
     private boolean dumpEnabled;
 
-    public PacketSniffer115R01(JavaPlugin plugin) {
+    public PacketSniffer116R01(JavaPlugin plugin) {
         this.plugin = plugin;
         this.inspector = new FieldInspector(plugin);
 
@@ -66,15 +66,15 @@ public class PacketSniffer115R01 implements PacketSniffer {
                 super.sendPacket(packet);
 
                 String packetName = packet.getClass().getSimpleName();
-                if (PacketSniffer115R01.this.filteredPacketNames.contains(packetName.toLowerCase())) {
+                if (PacketSniffer116R01.this.filteredPacketNames.contains(packetName.toLowerCase())) {
                     return;
                 }
 
                 String playerName = ep.getName();
-                PacketSniffer115R01.this.plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
+                PacketSniffer116R01.this.plugin.getLogger().info(String.format("SEND PACKET: %s -> %s", packetName, playerName));
 
-                if (PacketSniffer115R01.this.dumpEnabled) {
-                    PacketSniffer115R01.this.inspector.dump(packet);
+                if (PacketSniffer116R01.this.dumpEnabled) {
+                    PacketSniffer116R01.this.inspector.dump(packet);
                 }
             }
         };
